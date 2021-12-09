@@ -19,6 +19,39 @@ public class PrimUnitTest {
     }
 
     public static List<Vertex> createGraph() {
+
+/*
+        List<Vertex> graph = new ArrayList<>();
+        Vertex a = new Vertex("A");
+        Vertex b = new Vertex("B");
+        Vertex c = new Vertex("C");
+        Vertex d = new Vertex("D");
+        Vertex e = new Vertex("E");
+        Edge ab = new Edge(2);
+        a.addEdge(b, ab);
+        b.addEdge(a, ab);
+        Edge ac = new Edge(3);
+        a.addEdge(c, ac);
+        c.addEdge(a, ac);
+        Edge bc = new Edge(2);
+        b.addEdge(c, bc);
+        c.addEdge(b, bc);
+        Edge be = new Edge(5);
+        b.addEdge(e, be);
+        e.addEdge(b, be);
+        Edge cd = new Edge(1);
+        c.addEdge(d, cd);
+        d.addEdge(c, cd);
+        Edge ce = new Edge(1);
+        c.addEdge(e, ce);
+        e.addEdge(c, ce);
+        graph.add(a);
+        graph.add(b);
+        graph.add(c);
+        graph.add(d);
+        graph.add(e);
+*/
+
         List<Vertex> graph = new ArrayList<>();
 
 
@@ -43,76 +76,76 @@ public class PrimUnitTest {
         c.addEdge(b, bc);
 
         Edge ad = new Edge(3);
-        c.addEdge(a, ad);
-        d.addEdge(d, ad);
+        a.addEdge(d, ad);
+        d.addEdge(a, ad);
 
         Edge ae = new Edge(4);
-        a.addEdge(a, ae);
-        e.addEdge(e, ae);
+        a.addEdge(e, ae);
+        e.addEdge(a, ae);
 
         Edge ed = new Edge(5);
-        e.addEdge(e, ed);
-        d.addEdge(d, ed);
+        e.addEdge(d, ed);
+        d.addEdge(e, ed);
 
         Edge db = new Edge(3);
-        d.addEdge(d, db);
-        b.addEdge(b, db);
+        d.addEdge(b, db);
+        b.addEdge(d, db);
 
         Edge df = new Edge(3);
-        d.addEdge(d, df);
-        f.addEdge(f, df);
+        d.addEdge(f, df);
+        f.addEdge(d, df);
 
         Edge bf = new Edge(2);
-        b.addEdge(b, bf);
-        f.addEdge(f, bf);
+        b.addEdge(f, bf);
+        f.addEdge(b, bf);
 
         Edge bj = new Edge(4);
-        b.addEdge(b, bj);
-        j.addEdge(j, bj);
+        b.addEdge(j, bj);
+        j.addEdge(b, bj);
 
         Edge cj = new Edge(2);
-        c.addEdge(c, cj);
-        j.addEdge(j, cj);
+        c.addEdge(j, cj);
+        j.addEdge(c, cj);
 
         Edge fj = new Edge(3);
-        f.addEdge(f, fj);
-        j.addEdge(j, fj);
+        f.addEdge(j, fj);
+        j.addEdge(f, fj);
 
         Edge dg = new Edge(4);
-        d.addEdge(d, dg);
-        g.addEdge(g, dg);
+        d.addEdge(g, dg);
+        g.addEdge(d, dg);
 
         Edge eg = new Edge(4);
-        e.addEdge(e, eg);
-        g.addEdge(g, eg);
+        e.addEdge(g, eg);
+        g.addEdge(e, eg);
 
         Edge eh = new Edge(2);
-        e.addEdge(e, eh);
-        h.addEdge(h, eh);
+        e.addEdge(h, eh);
+        h.addEdge(e, eh);
 
         Edge hg = new Edge(3);
-        h.addEdge(h, hg);
-        g.addEdge(g, hg);
+        h.addEdge(g, hg);
+        g.addEdge(h, hg);
 
         Edge hi = new Edge(4);
-        h.addEdge(h, hi);
-        i.addEdge(i, hi);
+        h.addEdge(i, hi);
+        i.addEdge(h, hi);
 
         Edge gi = new Edge(2);
-        g.addEdge(g, gi);
-        i.addEdge(i, gi);
+        g.addEdge(i, gi);
+        i.addEdge(g, gi);
 
         Edge gf = new Edge(4);
-        g.addEdge(g, gf);
-        f.addEdge(f, gf);
+        g.addEdge(f, gf);
+        f.addEdge(g, gf);
 
         Edge fi = new Edge(3);
-        f.addEdge(f, fi);
-        i.addEdge(i, fi);
+        f.addEdge(i, fi);
+        i.addEdge(f, fi);
 
         Edge ij = new Edge(4);
-        i.addEdge(i, ij);
-        j.addEdge(j, ij);
+        i.addEdge(j, ij);
+        j.addEdge(i, ij);
 
         graph.add(a);
         graph.add(b);
