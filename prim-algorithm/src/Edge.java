@@ -1,6 +1,12 @@
 public class Edge {
+
     private int weight;
     private boolean isIncluded = false;
+    private boolean isPrinted = false;
+
+    public Edge(int weight) {
+        this.weight = weight;
+    }
 
     public int getWeight() {
         return weight;
@@ -16,5 +22,13 @@ public class Edge {
 
     public void setIncluded(boolean included) {
         isIncluded = included;
+    }
+
+    public boolean isPrinted() {
+        return isPrinted;
+    }
+
+    public void setPrinted(boolean printed) {
+        isPrinted = printed;
     }
 }
