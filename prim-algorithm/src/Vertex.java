@@ -1,22 +1,22 @@
+import org.apache.commons.math3.util.Pair;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-
-import org.apache.commons.math3.util.Pair;
 
 
 
 public class Vertex {
 
-    private String label  = null;
-    private Map<Vertex, Edge> edges = new HashMap<>();
-    private boolean isVisited = false;
+    private static String label  = null;
+    private static Map<Vertex, Edge> edges = new HashMap<>();
+    private static boolean isVisited = false;
 
     public Vertex(String label) {
         this.label = label;
     }
 
-    public String getLabel() {
+    public static String getLabel() {
         return label;
     }
 
@@ -38,7 +38,7 @@ public class Vertex {
         }
     }
 
-    public boolean isVisited() {
+    public static boolean isVisited() {
         return isVisited;
     }
 
@@ -84,7 +84,7 @@ public class Vertex {
         return sb.toString();
     }
 
-    public String includedToString(){
+    public static String includedToString(){
         StringBuilder sb = new StringBuilder();
         if (isVisited()) {
             Iterator<Map.Entry<Vertex,Edge>> it = edges.entrySet().iterator();
