@@ -4,9 +4,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-
-
-
 public class Prim {
 
     private List<Vertex> graph;
@@ -19,7 +16,7 @@ public class Prim {
         if (graph.size() > 0) {
             graph.get(0).setVisited(true);
         }
-        while (isDisconnected()){
+        while (isDisconnected()) {
             Edge nextMinimum = new Edge(Integer.MAX_VALUE);
             Vertex nextVertex = graph.get(0);
             for (Vertex vertex : graph) {
@@ -53,21 +50,22 @@ public class Prim {
         return sb.toString();
     }
 
-    public void resetPrintHistory(){
+    public void resetPrintHistory() {
         for (Vertex vertex : graph) {
-            Iterator<Map.Entry<Vertex,Edge>> it = vertex.getEdges().entrySet().iterator();
+            Iterator<Map.Entry<Vertex, Edge>> it = vertex.getEdges().entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry<Vertex,Edge> pair = it.next();
+                Map.Entry<Vertex, Edge> pair = it.next();
                 pair.getValue().setPrinted(false);
             }
         }
     }
 
-    public String minimumSpanningTreeToString(){
+    public String minimumSpanningTreeToString() {
         StringBuilder sb = new StringBuilder();
         for (Vertex vertex : graph) {
-            sb.append(Vertex.includedToString());
+            sb.append(vertex.includedToString());
         }
         return sb.toString();
     }
+
 }
