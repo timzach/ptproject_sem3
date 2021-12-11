@@ -16,6 +16,7 @@ public class Prim {
         if (graph.size() > 0) {
             graph.get(0).setVisited(true);
         }
+        //Schleife läuft so lange wie vertex noch nicht besucht wurde
         while (isDisconnected()) {
             Edge nextMinimum = new Edge(Integer.MAX_VALUE);
             Vertex nextVertex = graph.get(0);
