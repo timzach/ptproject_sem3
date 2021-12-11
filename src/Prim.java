@@ -22,7 +22,7 @@ public class Prim {
             Vertex nextVertex = graph.get(0);
             for (Vertex vertex : graph) {
                 if (vertex.isVisited()) {
-                    Pair<Vertex, Edge> candidate = vertex.nextMinimum();
+                    Pair<Vertex, Edge> candidate = vertex.nextMinimum(); //Momentaufnahme der Hashmap und sucht das nächste Minimum
                     if (candidate.getValue().getWeight() < nextMinimum.getWeight()) {
                         nextMinimum = candidate.getValue();
                         nextVertex = candidate.getKey();

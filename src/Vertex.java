@@ -8,10 +8,15 @@ import java.util.Map;
 
 public class Vertex {
 
-    private String label = null;
-    private Map<Vertex, Edge> edges = new HashMap<>();
-    private boolean isVisited = false;
 
+    //<editor-fold desc="Prim Variablen">
+    private String label = null;
+    private Map<Vertex, Edge> edges = new HashMap<>(); //Hasmap wegen den Key Values
+    private boolean isVisited = false;
+    //</editor-fold>
+
+
+    //<editor-fold desc="Prim">
     public Vertex(String label) {
         this.label = label;
     }
@@ -103,4 +108,5 @@ public class Vertex {
         }
         return sb.toString();
     }
+    //</editor-fold>
 }
