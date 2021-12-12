@@ -11,7 +11,6 @@ public class Node {
     private Map<Node, Edge> edges = new HashMap<>(); //Hashmap wegen den Key Values
     private boolean isVisited = false;
 
-
     public Node(String label) {
         this.label = label;
     }
@@ -87,6 +86,7 @@ public class Node {
                         sb.append(getLabel());
                         sb.append(" --- ");
                         sb.append(pair.getValue().getWeight());
+                        Edge.SumWeight = Edge.SumWeight + pair.getValue().getWeight();
                         sb.append(" --- ");
                         sb.append(pair.getKey().getLabel());
                         sb.append("\n");
