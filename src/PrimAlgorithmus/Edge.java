@@ -36,4 +36,12 @@ public class Edge {
     public void setPrinted(boolean printed) {
         isPrinted = printed;
     }
+
+    public static int getSumWeight() {
+        return SumWeight;
+    }
+
+    public static void setSumWeight(int sumWeight) {
+        SumWeight = sumWeight;
+    }
 }

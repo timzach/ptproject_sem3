@@ -86,7 +86,7 @@ public class Node {
                         sb.append(getLabel());
                         sb.append(" --- ");
                         sb.append(pair.getValue().getWeight());
-                        Edge.SumWeight = Edge.SumWeight + pair.getValue().getWeight();
+                        Edge.setSumWeight(Edge.getSumWeight() + pair.getValue().getWeight());
                         sb.append(" --- ");
                         sb.append(pair.getKey().getLabel());
                         sb.append("\n");
