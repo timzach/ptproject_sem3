@@ -1,3 +1,5 @@
+package PrimAlgorithmus;
+
 public class Edge {
 
 

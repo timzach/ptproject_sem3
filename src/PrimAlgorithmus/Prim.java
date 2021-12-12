@@ -1,3 +1,5 @@
+package PrimAlgorithmus;
+
 import org.apache.commons.math3.util.Pair;
 
 import java.util.Iterator;
@@ -6,9 +8,9 @@ import java.util.Map;
 
 public class Prim {
 
-    private List<Vertex> graph;
+    private List<Node> graph;
 
-    public Prim(List<Vertex> graph) {
+    public Prim(List<Node> graph) {
         this.graph = graph;
     }
 
@@ -19,24 +21,24 @@ public class Prim {
         //Schleife läuft so lange wie vertex noch nicht besucht wurde
         while (isDisconnected()) {
             Edge nextMinimum = new Edge(Integer.MAX_VALUE);
-            Vertex nextVertex = graph.get(0);
-            for (Vertex vertex : graph) {
-                if (vertex.isVisited()) {
-                    Pair<Vertex, Edge> candidate = vertex.nextMinimum(); //Momentaufnahme der Hashmap und sucht das nächste Minimum
+            Node nextNode = graph.get(0);
+            for (Node node : graph) {
+                if (node.isVisited()) {
+                    Pair<Node, Edge> candidate = node.nextMinimum(); //Momentaufnahme der Hashmap und sucht das nächste Minimum
                     if (candidate.getValue().getWeight() < nextMinimum.getWeight()) {
                         nextMinimum = candidate.getValue();
-                        nextVertex = candidate.getKey();
+                        nextNode = candidate.getKey();
                     }
                 }
             }
             nextMinimum.setIncluded(true);
-            nextVertex.setVisited(true);
+            nextNode.setVisited(true);
         }
     }
 
     private boolean isDisconnected() {
-        for (Vertex vertex : graph) {
-            if (!vertex.isVisited()) {
+        for (Node node : graph) {
+            if (!node.isVisited()) {
                 return true;
             }
         }
@@ -45,17 +47,17 @@ public class Prim {
 
     public String originalGraphToString() {
         StringBuilder sb = new StringBuilder();
-        for (Vertex vertex : graph) {
-            sb.append(vertex.originalToString());
+        for (Node node : graph) {
+            sb.append(node.originalToString());
         }
         return sb.toString();
     }
 
     public void resetPrintHistory() {
-        for (Vertex vertex : graph) {
-            Iterator<Map.Entry<Vertex, Edge>> it = vertex.getEdges().entrySet().iterator();
+        for (Node node : graph) {
+            Iterator<Map.Entry<Node, Edge>> it = node.getEdges().entrySet().iterator();
             while (it.hasNext()) {
-                Map.Entry<Vertex, Edge> pair = it.next();
+                Map.Entry<Node, Edge> pair = it.next();
                 pair.getValue().setPrinted(false);
             }
         }
@@ -63,8 +65,8 @@ public class Prim {
 
     public String minimumSpanningTreeToString() {
         StringBuilder sb = new StringBuilder();
-        for (Vertex vertex : graph) {
-            sb.append(vertex.includedToString());
+        for (Node node : graph) {
+            sb.append(node.includedToString());
         }
         return sb.toString();
     }
