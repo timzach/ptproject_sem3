@@ -3,20 +3,15 @@
 import org.apache.commons.math3.util.Pair;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public class Vertex {
 
-
-    //<editor-fold desc="Prim Variablen">
     private String label = null;
-    private Map<Vertex, Edge> edges = new HashMap<>(); //Hasmap wegen den Key Values
+    private Map<Vertex, Edge> edges = new HashMap<>(); //Hashmap wegen den Key Values
     private boolean isVisited = false;
-    //</editor-fold>
 
 
-    //<editor-fold desc="Prim">
     public Vertex(String label) {
         this.label = label;
     }
@@ -54,9 +49,7 @@ public class Vertex {
     public Pair<Vertex, Edge> nextMinimum() {
         Edge nextMinimum = new Edge(Integer.MAX_VALUE);
         Vertex nextVertex = this;
-        Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Vertex, Edge> pair = it.next();
+        for (Map.Entry<Vertex, Edge> pair : edges.entrySet()) {
             if (!pair.getKey().isVisited()) {
                 if (!pair.getValue().isIncluded()) {
                     if (pair.getValue().getWeight() < nextMinimum.getWeight()) {
@@ -71,9 +64,7 @@ public class Vertex {
 
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
-        Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Vertex, Edge> pair = it.next();
+        for (Map.Entry<Vertex, Edge> pair : edges.entrySet()) {
             if (!pair.getValue().isPrinted()) {
                 sb.append(getLabel());
                 sb.append(" --- ");
@@ -90,9 +81,7 @@ public class Vertex {
     public String includedToString() {
         StringBuilder sb = new StringBuilder();
         if (isVisited()) {
-            Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<Vertex, Edge> pair = it.next();
+            for (Map.Entry<Vertex, Edge> pair : edges.entrySet()) {
                 if (pair.getValue().isIncluded()) {
                     if (!pair.getValue().isPrinted()) {
                         sb.append(getLabel());
@@ -108,5 +97,5 @@ public class Vertex {
         }
         return sb.toString();
     }
-    //</editor-fold>
+
 }

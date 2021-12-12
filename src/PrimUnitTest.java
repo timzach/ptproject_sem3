@@ -68,7 +68,7 @@ public class PrimUnitTest {
 
 
         Edge ab = new Edge(5);
-        a.addEdge();
+        a.addEdge(b, ab);
         b.addEdge(a, ab);
 
         Edge bc = new Edge(3);
