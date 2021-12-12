@@ -1,8 +1,6 @@
 package PrimAlgorithmus;
 
 import org.apache.commons.math3.util.Pair;
-
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +53,7 @@ public class Prim {
 
     public void resetPrintHistory() {
         for (Node node : graph) {
-            Iterator<Map.Entry<Node, Edge>> it = node.getEdges().entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<Node, Edge> pair = it.next();
+            for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
                 pair.getValue().setPrinted(false);
             }
         }

@@ -16,6 +16,7 @@ public class PrimUnitTest {
         System.out.println();
         prim.resetPrintHistory();
         System.out.println(prim.minimumSpanningTreeToString());
+        System.out.println("Gesamtsumme: " + Edge.SumWeight);
     }
 
     public static List<Node> createGraph() {
