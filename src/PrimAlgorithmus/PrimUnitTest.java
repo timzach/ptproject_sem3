@@ -1,4 +1,4 @@
-
+package PrimAlgorithmus;
 
 import org.junit.jupiter.api.Test;
 
@@ -18,53 +18,21 @@ public class PrimUnitTest {
         System.out.println(prim.minimumSpanningTreeToString());
     }
 
-    public static List<Vertex> createGraph() {
+    public static List<Node> createGraph() {
 
-/*
-        List<Vertex> graph = new ArrayList<>();
-        Vertex a = new Vertex("A");
-        Vertex b = new Vertex("B");
-        Vertex c = new Vertex("C");
-        Vertex d = new Vertex("D");
-        Vertex e = new Vertex("E");
-        Edge ab = new Edge(2);
-        a.addEdge(b, ab);
-        b.addEdge(a, ab);
-        Edge ac = new Edge(3);
-        a.addEdge(c, ac);
-        c.addEdge(a, ac);
-        Edge bc = new Edge(2);
-        b.addEdge(c, bc);
-        c.addEdge(b, bc);
-        Edge be = new Edge(5);
-        b.addEdge(e, be);
-        e.addEdge(b, be);
-        Edge cd = new Edge(1);
-        c.addEdge(d, cd);
-        d.addEdge(c, cd);
-        Edge ce = new Edge(1);
-        c.addEdge(e, ce);
-        e.addEdge(c, ce);
-        graph.add(a);
-        graph.add(b);
-        graph.add(c);
-        graph.add(d);
-        graph.add(e);
-*/
-
-        List<Vertex> graph = new ArrayList<>();
+        List<Node> graph = new ArrayList<>();
 
 
-        Vertex a = new Vertex("A");
-        Vertex b = new Vertex("B");
-        Vertex c = new Vertex("C");
-        Vertex d = new Vertex("D");
-        Vertex e = new Vertex("E");
-        Vertex f = new Vertex("F");
-        Vertex g = new Vertex("G");
-        Vertex h = new Vertex("H");
-        Vertex i = new Vertex("I");
-        Vertex j = new Vertex("J");
+        Node a = new Node("A");
+        Node b = new Node("B");
+        Node c = new Node("C");
+        Node d = new Node("D");
+        Node e = new Node("E");
+        Node f = new Node("F");
+        Node g = new Node("G");
+        Node h = new Node("H");
+        Node i = new Node("I");
+        Node j = new Node("J");
 
 
         Edge ab = new Edge(5);

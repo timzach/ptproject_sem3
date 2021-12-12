@@ -1,18 +1,18 @@
-
+package PrimAlgorithmus;
 
 import org.apache.commons.math3.util.Pair;
 
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
-public class Vertex {
+public class Node {
 
     private String label = null;
-    private Map<Vertex, Edge> edges = new HashMap<>();
+    private Map<Node, Edge> edges = new HashMap<>(); //Hashmap wegen den Key Values
     private boolean isVisited = false;
 
-    public Vertex(String label) {
+
+    public Node(String label) {
         this.label = label;
     }
 
@@ -24,17 +24,17 @@ public class Vertex {
         this.label = label;
     }
 
-    public Map<Vertex, Edge> getEdges() {
+    public Map<Node, Edge> getEdges() {
         return edges;
     }
 
-    public void addEdge(Vertex vertex, Edge edge) {
-        if (this.edges.containsKey(vertex)) {
-            if (edge.getWeight() < this.edges.get(vertex).getWeight()) {
-                this.edges.replace(vertex, edge);
+    public void addEdge(Node node, Edge edge) {
+        if (this.edges.containsKey(node)) {
+            if (edge.getWeight() < this.edges.get(node).getWeight()) {
+                this.edges.replace(node, edge);
             }
         } else {
-            this.edges.put(vertex, edge);
+            this.edges.put(node, edge);
         }
     }
 
@@ -46,29 +46,25 @@ public class Vertex {
         isVisited = visited;
     }
 
-    public Pair<Vertex, Edge> nextMinimum() {
+    public Pair<Node, Edge> nextMinimum() {
         Edge nextMinimum = new Edge(Integer.MAX_VALUE);
-        Vertex nextVertex = this;
-        Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Vertex, Edge> pair = it.next();
+        Node nextNode = this;
+        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
             if (!pair.getKey().isVisited()) {
                 if (!pair.getValue().isIncluded()) {
                     if (pair.getValue().getWeight() < nextMinimum.getWeight()) {
                         nextMinimum = pair.getValue();
-                        nextVertex = pair.getKey();
+                        nextNode = pair.getKey();
                     }
                 }
             }
         }
-        return new Pair<>(nextVertex, nextMinimum);
+        return new Pair<>(nextNode, nextMinimum);
     }
 
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
-        Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Vertex, Edge> pair = it.next();
+        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
             if (!pair.getValue().isPrinted()) {
                 sb.append(getLabel());
                 sb.append(" --- ");
@@ -85,9 +81,7 @@ public class Vertex {
     public String includedToString() {
         StringBuilder sb = new StringBuilder();
         if (isVisited()) {
-            Iterator<Map.Entry<Vertex, Edge>> it = edges.entrySet().iterator();
-            while (it.hasNext()) {
-                Map.Entry<Vertex, Edge> pair = it.next();
+            for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
                 if (pair.getValue().isIncluded()) {
                     if (!pair.getValue().isPrinted()) {
                         sb.append(getLabel());
@@ -103,4 +97,5 @@ public class Vertex {
         }
         return sb.toString();
     }
+
 }

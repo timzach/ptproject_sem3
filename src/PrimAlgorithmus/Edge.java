@@ -1,4 +1,9 @@
+package PrimAlgorithmus;
+
 public class Edge {
+
+
+
     private int weight;
     private boolean isIncluded = false;
     private boolean isPrinted = false;
