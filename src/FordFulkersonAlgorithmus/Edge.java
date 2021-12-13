@@ -3,13 +3,14 @@ package FordFulkersonAlgorithmus;
 public class Edge {
 
     private int capacity;
-    private int flow;
+    private int flow = 0;
 
+    private boolean isPrinted = false;
     private boolean isFull = false;
 
-    public Edge(int capacity, int flow) {
+    public Edge(int capacity) {
         this.capacity = capacity;
-        this.flow = flow;
+        //this.flow = flow;
     }
 
     public int getCapacity() {
@@ -34,5 +35,13 @@ public class Edge {
 
     public void setFull(boolean full) {
         isFull = full;
+    }
+
+    public boolean isPrinted() {
+        return isPrinted;
+    }
+
+    public void setPrinted(boolean printed) {
+        isPrinted = printed;
     }
 }
