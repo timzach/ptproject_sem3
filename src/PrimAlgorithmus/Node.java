@@ -8,7 +8,7 @@ import java.util.Map;
 public class Node {
 
     private String label = null;
-    private Map<Node, Edge> edges = new HashMap<>(); //Hashmap wegen den Key Values
+    private Map<Node, Edge> edges = new HashMap<>(); //Hashmap in der Liste
     private boolean isVisited = false;
 
     public Node(String label) {
@@ -44,6 +44,10 @@ public class Node {
     public void setVisited(boolean visited) {
         isVisited = visited;
     }
+
+
+    //Note that since nextMinimum() iterates through the edges, the time complexity of this implementation is O(V2).
+    // If we store the edges in a priority queue (sorted by weight) instead, the algorithm will perform in O(E log V).
 
     public Pair<Node, Edge> nextMinimum() {
         Edge nextMinimum = new Edge(Integer.MAX_VALUE);

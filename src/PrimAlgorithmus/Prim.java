@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Prim {
 
-    private List<Node> graph;
+    private List<Node> graph; //In jedem Knoten sind alle Verbindungen mit einer Hashmap gespeichert
 
     public Prim(List<Node> graph) {
         this.graph = graph;
@@ -22,7 +22,7 @@ public class Prim {
             Node nextNode = graph.get(0);
             for (Node node : graph) {
                 if (node.isVisited()) {
-                    Pair<Node, Edge> candidate = node.nextMinimum(); //Momentaufnahme der Hashmap und sucht das nächste Minimum
+                    Pair<Node, Edge> candidate = node.nextMinimum(); //Sucht das nächste Minimum
                     if (candidate.getValue().getWeight() < nextMinimum.getWeight()) {
                         nextMinimum = candidate.getValue();
                         nextNode = candidate.getKey();
