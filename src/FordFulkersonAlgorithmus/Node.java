@@ -1,11 +1,6 @@
 package FordFulkersonAlgorithmus;
 
-import org.apache.commons.math3.util.Pair;
-
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 
 public class Node {
 
@@ -61,7 +56,23 @@ public class Node {
 
 
      */
+    public List<Node> path_bfs() {
+        Node lastNode = this;
+        Stack<Node> nodeStack = new Stack<>();
+        List<Node> path = new ArrayList<>();
+        Node[] parent; //geht das?
 
+        //Der erste knoten soll in den Stack gepusht werden
+        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
+            if (!pair.getKey().isVisited()) {
+                if (pair.getValue().getCapacity() > 0) {
+                    nodeStack.pop().getEdges();//Diese Edges sollen dann gepusht werden
+                    nodeStack.push(pair.getKey());
+                }
+            }
+        }
+        return path;
+    }
 
     public String originalToString() {
         StringBuilder sb = new StringBuilder();

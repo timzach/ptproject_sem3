@@ -6,6 +6,7 @@ import java.util.Map;
 public class FordF {
 
     private List<Node> graph;
+    private int numberOfNodes;
 
     public FordF(List<Node> graph) {
         this.graph = graph;
