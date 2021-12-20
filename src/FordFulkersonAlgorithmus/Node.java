@@ -1,7 +1,11 @@
 package FordFulkersonAlgorithmus;
 
+import org.apache.commons.math3.util.Pair;
+
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.Queue;
 
 public class Node {
 
@@ -50,6 +54,14 @@ public class Node {
             this.edges.put(node, edge);
         }
     }
+
+    /*
+    DFS Methode
+    Methode die einen Path von s zu t findet mit Edges (!isFull()) oder capacity > 0
+
+
+     */
+
 
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
