@@ -23,6 +23,41 @@ public class FordFUnitTest {
         System.out.println("-------------------");
     }
 
+/*    public static void testForest( List<Node> base, String source, String target)
+    {
+        IntStream.range(0, 500).forEach(i ->
+        {
+            int index = (int) (Math.random() * 6);
+            int index2= (int) (Math.random() * 6);
+            Collections.swap(base,index, index2);
+            Node sourceNode = null;
+            Node targetNode = null;
+            for (Node node : base)
+            {
+                if(node.getLabel().equals(source))
+                    sourceNode = node;
+                if(node.getLabel().equals(target))
+                    targetNode = node;
+            }
+            FordF alg = new FordF(base);
+            printCombination(base);
+            System.out.println(alg.run(sourceNode,targetNode));
+            System.out.println("-------------------");
+            base.forEach( e -> {e.reset();});
+        });
+
+    }
+
+    public static void printCombination( List<Node> base)
+    {
+        for (int i = 0; i < base.size()-1; i++)
+        {
+            System.out.print(base.get(i).getLabel() + "-" );
+        }
+        System.out.print(base.get(base.size()-1).getLabel() + "\n" );
+    }*/
+
+
     public static List<Node> createGraph() {
 
         List<Node> graph = new ArrayList<>();

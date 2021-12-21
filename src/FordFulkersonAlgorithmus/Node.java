@@ -144,4 +144,9 @@ public class Node {
         }
         return sb.toString();
     }
+
+    public void reset()
+    {
+        edges.forEach( (k,v) -> {v.reset();});
+    }
 }
