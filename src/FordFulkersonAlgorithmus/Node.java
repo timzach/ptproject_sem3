@@ -50,29 +50,82 @@ public class Node {
         }
     }
 
-    /*
-    DFS Methode
-    Methode die einen Path von s zu t findet mit Edges (!isFull()) oder capacity > 0
+    public boolean checkEdgesFull() {
+        for (Edge edge : edges.values()) {
+            if (!edge.isFull()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
+    public int getRemainingCapacity(Node target) {
+        if (this.edges.containsKey(target)) {
+            return edges.get(target).getRemainingCapacity();
+        }
+        return 0;
 
-     */
-    public List<Node> path_bfs() {
-        Node lastNode = this;
-        Stack<Node> nodeStack = new Stack<>();
-        List<Node> path = new ArrayList<>();
-        Node[] parent; //geht das?
+    }
 
-        //Der erste knoten soll in den Stack gepusht werden
-        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
-            if (!pair.getKey().isVisited()) {
-                if (pair.getValue().getCapacity() > 0) {
-                    nodeStack.pop().getEdges();//Diese Edges sollen dann gepusht werden
-                    nodeStack.push(pair.getKey());
+    public void fill(Node target, int value) {
+        if (this.edges.containsKey(target)) {
+            edges.get(target).fill(value);
+            return; //damit es nicht in die Exception läuft
+        }
+        throw new RuntimeException("no Edge found");
+    }
+
+    public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
+
+        if (edges.containsKey(target) && !edges.get(target).isFull()) {
+            List<Node> path = new ArrayList<>();
+            path.add(target);
+            path.add(this);
+
+            return Optional.of(path);
+        }
+        visited.add(this);
+        for (Node node : edges.keySet()) {
+            if (!visited.contains(node)) {
+                if (!edges.get(node).isFull()) {
+                    Optional<List<Node>> tmp = node.path_dfs(target, visited);
+
+                    if (tmp.isPresent()) {
+                        tmp.get().add(this);
+                        return tmp;
+                    }
                 }
             }
         }
-        return path;
+        return Optional.empty();
     }
+
+    public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
+
+        if (edges.containsKey(target) && !edges.get(target).isFull()) {
+            List<Node> path = new ArrayList<>();
+            path.add(target);
+            path.add(this);
+
+            return Optional.of(path);
+        }
+        visited.add(this);
+        for (Node node : edges.keySet()) {
+            if (!visited.contains(node)) {
+                if (!edges.get(node).isFull()) {
+                    Optional<List<Node>> tmp = node.path_bfs(target, visited);
+
+                    if (tmp.isPresent()) {
+                        tmp.get().add(this);
+                        return tmp;
+                    }
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
+
 
     public String originalToString() {
         StringBuilder sb = new StringBuilder();

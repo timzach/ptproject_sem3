@@ -2,7 +2,7 @@ package FordFulkersonAlgorithmus;
 
 public class Edge {
 
-    private int capacity;
+    private final int capacity;
     private int flow = 0;
 
     private boolean isPrinted = false;
@@ -15,10 +15,6 @@ public class Edge {
 
     public int getCapacity() {
         return capacity;
-    }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
     }
 
     public int getFlow() {
@@ -43,5 +39,24 @@ public class Edge {
 
     public void setPrinted(boolean printed) {
         isPrinted = printed;
+    }
+
+    public int getRemainingCapacity() {
+        return capacity - flow;
+    }
+
+    public void fill(int value) {
+        flow += value;
+        if(flow >= capacity){
+            isFull = true;
+            if (flow > capacity) {
+                throw new RuntimeException("Uebergelaufen");
+            }
+        }
+    }
+
+    public void reset(){
+        flow = 0;
+        isFull = false;
     }
 }

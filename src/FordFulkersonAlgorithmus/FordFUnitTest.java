@@ -2,18 +2,25 @@ package FordFulkersonAlgorithmus;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.IntStream;
+
 
 public class FordFUnitTest {
 
     @Test
     public void giveGraph(){
-        FordF fordF = new FordF(createGraph());
+        List<Node> graphen = createGraph();
+//        testForest(graphen,"s","t");
+        FordF fordF = new FordF(graphen);
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
-
+        int maxFlow = fordF.run(graphen.get(0),graphen.get(graphen.size()-1));
+        System.out.println(fordF.originalGraphToString());
+        System.out.println("-------------------");
+        System.out.println("Maximaler Fluss: " + maxFlow);
+        System.out.println("-------------------");
     }
 
     public static List<Node> createGraph() {
@@ -60,6 +67,8 @@ public class FordFUnitTest {
         graph.add(c);
         graph.add(d);
         graph.add(t);
+
+
 
         return graph;
 
