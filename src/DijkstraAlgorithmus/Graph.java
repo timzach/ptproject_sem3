@@ -29,9 +29,13 @@ public class Graph {
 
     @Override
     public String toString() {
-        return "Graph{" +
-                "nodes=" + nodes +
-                ", edges=" + edges +
-                '}';
+        if (!edges.isEmpty()) {
+            for (Edge edges: edges) {
+                System.out.println(edges.toString());
+            }
+            return "Fertig!";
+        } else {
+            return "Es existiert kein Graph!";
+        }
     }
 }
