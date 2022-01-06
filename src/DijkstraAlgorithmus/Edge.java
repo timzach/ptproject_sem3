@@ -1,14 +1,16 @@
 package DijkstraAlgorithmus;
 
 public class Edge {
-    private int weight;
-    private Node source;
-    private Node destination;
 
-    public Edge(int weight, Node source, Node destination) {
+
+
+    private int weight;
+    public static int SumWeight;
+    private boolean isIncluded = false;
+    private boolean isPrinted = false;
+
+    public Edge(int weight) {
         this.weight = weight;
-        this.source = source;
-        this.destination = destination;
     }
 
     public int getWeight() {
@@ -19,25 +21,27 @@ public class Edge {
         this.weight = weight;
     }
 
-    public Node getSource() {
-        return source;
+    public boolean isIncluded() {
+        return isIncluded;
     }
 
-    public void setSource(Node source) {
-        this.source = source;
+    public void setIncluded(boolean included) {
+        isIncluded = included;
     }
 
-    public Node getDestination() {
-        return destination;
+    public boolean isPrinted() {
+        return isPrinted;
     }
 
-    public void setDestination(Node destination) {
-        this.destination = destination;
+    public void setPrinted(boolean printed) {
+        isPrinted = printed;
     }
 
-    @Override
-    public String toString() {
-        return source.getName() + " --- " + weight + " ---> " + destination.getName();
+    public static int getSumWeight() {
+        return SumWeight;
     }
 
+    public static void setSumWeight(int sumWeight) {
+        SumWeight = sumWeight;
+    }
 }

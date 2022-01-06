@@ -1,4 +1,4 @@
-package DijkstraAlgorithmus;
+package DijkstraAlgorithmusList;
 
 import org.junit.jupiter.api.Test;
 
