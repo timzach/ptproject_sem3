@@ -8,10 +8,6 @@ public class Node {
     private Map<Node, Edge> edges = new HashMap<>();
     private boolean isVisited = false;
 
-    //Start- und Endpunkt definieren?
-    //Oder über das label mit s(start) und t(target)?
-
-
     public Node(String label) {
         this.label = label;
     }
@@ -72,8 +68,10 @@ public class Node {
             edges.get(target).fill(value);
             return; //damit es nicht in die Exception läuft
         }
-        throw new RuntimeException("no Edge found");
+        throw new RuntimeException("no Edge found when trying to fill");
     }
+
+    //TODO: Überprüfen ob das eine Tiefensuche ist (sollte so sein)
 
     public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
 
@@ -100,29 +98,57 @@ public class Node {
         return Optional.empty();
     }
 
+    //TODO: Breitensuche Implementieren
+
     public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
 
-        if (edges.containsKey(target) && !edges.get(target).isFull()) {
-            List<Node> path = new ArrayList<>();
-            path.add(target);
-            path.add(this);
+        //queue initialisieren
+        Queue<Node> NodeQueue = new LinkedList<Node>();
 
-            return Optional.of(path);
-        }
-        visited.add(this);
-        for (Node node : edges.keySet()) {
-            if (!visited.contains(node)) {
-                if (!edges.get(node).isFull()) {
-                    Optional<List<Node>> tmp = node.path_bfs(target, visited);
+        //source in die Queue packen
+        NodeQueue.add(this);
 
-                    if (tmp.isPresent()) {
-                        tmp.get().add(this);
-                        return tmp;
+        //Queue abarbeiten:
+        while (!NodeQueue.isEmpty()) {
+
+            //peek tmp speichern um es am ende wieder in die queue zu packen
+            Node tmp = NodeQueue.peek();
+
+            //wenn peek=target ist dann soll alles gelöscht werden bis peek=source ist
+            if (tmp == target) {
+                while (NodeQueue.peek() != this) {
+                    NodeQueue.remove();
+                }
+                //queue in die liste umwandeln
+                List<Node> path = (List<Node>) NodeQueue;
+                return Optional.of(path);
+            }
+
+            //Nachfolgenden Nodes von Pop in die queue
+            Node QueueStart = NodeQueue.poll();
+            //TODO: Weg finden damit man die Nodes von den Edges bekommt zum hinzufügen
+            for (Node node : edges.keySet()) {
+                if (edges.containsKey(tmp)) {
+                    if (!visited.contains(tmp)) {
+                        if (!edges.get(node).isFull()) {
+                            NodeQueue.add(node);
+                        }
                     }
                 }
             }
+            //tmp visited setzen
+            visited.add(tmp);
+            //tmp wieder in die queue packen
+            if (!edges.get(tmp).isFull()) {
+                NodeQueue.add(tmp);
+            }
+
+
+
         }
+
         return Optional.empty();
+
     }
 
 

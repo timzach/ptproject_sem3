@@ -10,13 +10,13 @@ public class FordFUnitTest {
 
     @Test
     public void giveGraph(){
-        List<Node> graphen = createGraph();
+        List<Node> graph = createGraph();
 //        testForest(graphen,"s","t");
-        FordF fordF = new FordF(graphen);
+        FordF fordF = new FordF(graph);
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
-        int maxFlow = fordF.run(graphen.get(0),graphen.get(graphen.size()-1));
+        int maxFlow = fordF.run(graph.get(0),graph.get(graph.size()-1));
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
@@ -97,10 +97,10 @@ public class FordFUnitTest {
         d.addEdge(t, dt);
 
         graph.add(s);
-        graph.add(a);
-        graph.add(b);
-        graph.add(c);
         graph.add(d);
+        graph.add(c);
+        graph.add(b);
+        graph.add(a);
         graph.add(t);
 
 

@@ -17,7 +17,8 @@ public class FordF {
         //while Kanten nicht voll
         while (!source.checkEdgesFull()) {
             //bfs machen
-            Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
+            //Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
+            Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
             if (tmp.isEmpty()) {
                 return maxFlow;
             }
