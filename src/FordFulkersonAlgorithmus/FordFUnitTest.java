@@ -2,19 +2,61 @@ package FordFulkersonAlgorithmus;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.IntStream;
+
 
 public class FordFUnitTest {
 
     @Test
     public void giveGraph(){
-        FordF fordF = new FordF(createGraph());
+        List<Node> graph = createGraph();
+//        testForest(graphen,"s","t");
+        FordF fordF = new FordF(graph);
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
+        int maxFlow = fordF.run(graph.get(0),graph.get(graph.size()-1));
+        System.out.println(fordF.originalGraphToString());
+        System.out.println("-------------------");
+        System.out.println("Maximaler Fluss: " + maxFlow);
+        System.out.println("-------------------");
+    }
+
+/*    public static void testForest( List<Node> base, String source, String target)
+    {
+        IntStream.range(0, 500).forEach(i ->
+        {
+            int index = (int) (Math.random() * 6);
+            int index2= (int) (Math.random() * 6);
+            Collections.swap(base,index, index2);
+            Node sourceNode = null;
+            Node targetNode = null;
+            for (Node node : base)
+            {
+                if(node.getLabel().equals(source))
+                    sourceNode = node;
+                if(node.getLabel().equals(target))
+                    targetNode = node;
+            }
+            FordF alg = new FordF(base);
+            printCombination(base);
+            System.out.println(alg.run(sourceNode,targetNode));
+            System.out.println("-------------------");
+            base.forEach( e -> {e.reset();});
+        });
 
     }
+
+    public static void printCombination( List<Node> base)
+    {
+        for (int i = 0; i < base.size()-1; i++)
+        {
+            System.out.print(base.get(i).getLabel() + "-" );
+        }
+        System.out.print(base.get(base.size()-1).getLabel() + "\n" );
+    }*/
+
 
     public static List<Node> createGraph() {
 
@@ -55,11 +97,13 @@ public class FordFUnitTest {
         d.addEdge(t, dt);
 
         graph.add(s);
-        graph.add(a);
-        graph.add(b);
-        graph.add(c);
         graph.add(d);
+        graph.add(c);
+        graph.add(b);
+        graph.add(a);
         graph.add(t);
+
+
 
         return graph;
 
