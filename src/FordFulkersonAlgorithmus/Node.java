@@ -142,15 +142,9 @@ public class Node {
             if (!edges.get(tmp).isFull()) {
                 NodeQueue.add(tmp);
             }
-
-
-
         }
-
         return Optional.empty();
-
     }
-
 
 
     public String originalToString() {
@@ -171,8 +165,9 @@ public class Node {
         return sb.toString();
     }
 
-    public void reset()
-    {
-        edges.forEach( (k,v) -> {v.reset();});
+    public void reset() {
+        edges.forEach((k, v) -> {
+            v.reset();
+        });
     }
 }
