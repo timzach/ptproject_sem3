@@ -2,10 +2,10 @@ package FordFulkersonAlgorithmus;
 
 import java.util.*;
 
-public class Node {
+public class Node implements Comparable {
 
     private String label = null;
-    private Map<Node, Edge> edges = new HashMap<>();
+    private Map<Node, Edge> edges = new TreeMap<>();
     private boolean isVisited = false;
 
     public Node(String label) {
@@ -126,7 +126,7 @@ public class Node {
 
             //Nachfolgenden Nodes von Pop in die queue
             Node QueueStart = NodeQueue.poll();
-            //TODO: Weg finden damit man die Nodes von den Edges bekommt zum hinzufügen
+
             for (Node node : edges.keySet()) {
                 if (edges.containsKey(tmp)) {
                     if (!visited.contains(tmp)) {
@@ -169,5 +169,14 @@ public class Node {
         edges.forEach((k, v) -> {
             v.reset();
         });
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if (o instanceof Node) {
+            Node tmp = (Node) o;
+            return tmp.label.compareTo(this.label);
+        }
+        return 0;
     }
 }
