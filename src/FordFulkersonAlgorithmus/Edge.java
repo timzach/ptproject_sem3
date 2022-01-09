@@ -54,7 +54,6 @@ public class Edge {
             }
         }
     }
-
     public void reset(){
         flow = 0;
         isFull = false;
