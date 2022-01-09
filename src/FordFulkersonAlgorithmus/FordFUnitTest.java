@@ -3,7 +3,7 @@ package FordFulkersonAlgorithmus;
 import org.junit.jupiter.api.Test;
 
 import java.util.*;
-import java.util.stream.IntStream;
+//import java.util.stream.IntStream;
 
 
 public class FordFUnitTest {
@@ -13,14 +13,23 @@ public class FordFUnitTest {
         List<Node> graph = createGraph();
 //        testForest(graphen,"s","t");
         FordF fordF = new FordF(graph);
-        System.out.println(fordF.originalGraphToString());
+        //System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
-        int maxFlow = fordF.run(graph.get(0),graph.get(graph.size()-1));
-        System.out.println(fordF.originalGraphToString());
-        System.out.println("-------------------");
-        System.out.println("Maximaler Fluss: " + maxFlow);
-        System.out.println("-------------------");
+        for (int i = 0; i < 200; i++) {
+            int maxFlow = fordF.run(graph.get(0),graph.get(graph.size()-1));
+            //System.out.println(fordF.originalGraphToString());
+            System.out.println("-------------------");
+            System.out.println("Maximaler Fluss: " + maxFlow);
+            System.out.println("-------------------");
+            fordF.resetPrintHistory();
+
+            for (Node node: graph) {
+                node.reset();
+                //node.shuffle();
+            }
+
+        }
     }
 
 /*    public static void testForest( List<Node> base, String source, String target)
@@ -92,6 +101,23 @@ public class FordFUnitTest {
 
         Edge ct = new Edge(10);
         c.addEdge(t, ct);
+
+/*        Scanner scanner = new Scanner(System.in);
+
+        String startNode;
+        String endNode;
+        String nameNode;
+        int cap;
+
+        System.out.println("Startknoten:");
+        startNode = scanner.nextLine();
+        System.out.println("Endknoten:");
+        endNode = scanner.nextLine();
+        nameNode = startNode+endNode;
+        System.out.println("Kapazität");
+        cap = scanner.nextInt();*/
+
+
 
         Edge dt = new Edge(17);
         d.addEdge(t, dt);
