@@ -81,10 +81,10 @@ public class Node implements Comparable {
             return Optional.of(path);
         }
         visited.add(this);
-        Set<Node> nodeSet = edges.keySet();
-        List<Node> nodeList = new LinkedList<Node>(nodeSet);
-        Collections.shuffle(nodeList);
-        for (Node node : nodeList) {
+        //Set<Node> nodeSet = edges.keySet();
+        //List<Node> nodeList = new LinkedList<Node>(nodeSet);
+        //Collections.shuffle(nodeList);
+        for (Node node : edges.keySet()) {
             if (!visited.contains(node)) {
                 if (!edges.get(node).isFull()) {
                     Optional<List<Node>> tmp = node.path_dfs(target, visited);

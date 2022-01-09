@@ -9,28 +9,20 @@ import java.util.*;
 public class FordFUnitTest {
 
     @Test
-    public void giveGraph(){
+    public void giveGraph() {
         List<Node> graph = createGraph();
-//        testForest(graphen,"s","t");
         FordF fordF = new FordF(graph);
-        //System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
-        for (int i = 0; i < 200; i++) {
-            int maxFlow = fordF.run(graph.get(0),graph.get(graph.size()-1));
-            //System.out.println(fordF.originalGraphToString());
-            System.out.println("-------------------");
-            System.out.println("Maximaler Fluss: " + maxFlow);
-            System.out.println("-------------------");
-            fordF.resetPrintHistory();
 
-            for (Node node: graph) {
-                node.reset();
-                //node.shuffle();
-            }
-
-        }
+        int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
+        System.out.println(fordF.originalGraphToString());
+        System.out.println("-------------------");
+        System.out.println("Maximaler Fluss: " + maxFlow);
+        System.out.println("-------------------");
     }
+
 
 /*    public static void testForest( List<Node> base, String source, String target)
     {
@@ -118,7 +110,6 @@ public class FordFUnitTest {
         cap = scanner.nextInt();*/
 
 
-
         Edge dt = new Edge(17);
         d.addEdge(t, dt);
 
@@ -128,7 +119,6 @@ public class FordFUnitTest {
         graph.add(b);
         graph.add(a);
         graph.add(t);
-
 
 
         return graph;
