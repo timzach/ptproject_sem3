@@ -94,22 +94,6 @@ public class FordFUnitTest {
         Edge ct = new Edge(10);
         c.addEdge(t, ct);
 
-/*        Scanner scanner = new Scanner(System.in);
-
-        String startNode;
-        String endNode;
-        String nameNode;
-        int cap;
-
-        System.out.println("Startknoten:");
-        startNode = scanner.nextLine();
-        System.out.println("Endknoten:");
-        endNode = scanner.nextLine();
-        nameNode = startNode+endNode;
-        System.out.println("Kapazität");
-        cap = scanner.nextInt();*/
-
-
         Edge dt = new Edge(17);
         d.addEdge(t, dt);
 
@@ -119,7 +103,6 @@ public class FordFUnitTest {
         graph.add(b);
         graph.add(a);
         graph.add(t);
-
 
         return graph;
 

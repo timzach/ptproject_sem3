@@ -1,8 +1,8 @@
 import FordFulkersonAlgorithmus.*;
-import PrimAlgorithmus.Prim;
-import Probleme.Problem1;
-import Probleme.Problem2;
-import Probleme.Problem6;
+import FordFulkersonAlgorithmus.Node;
+import PrimAlgorithmus.*;
+import Probleme.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,16 +48,18 @@ public class UserEingabe {
                 break;
             case 2:
                 System.out.println("Wasserversorgung");
-                wasserversorgung();
+                wasserVersorgung();
                 break;
             case 3:
                 System.out.println("Feuerwerk");
                 break;
             case 4:
                 System.out.println("Hochzeitspaare");
+                //FordFulkerson
                 break;
             case 5:
                 System.out.println("Einladungen");
+                //euler
                 break;
             case 6:
                 System.out.println("StrassenVerteilung");
@@ -65,11 +67,12 @@ public class UserEingabe {
                 break;
             case 7:
                 System.out.println("Kompetenz");
+                //FordFulkerson
                 break;
         }
     }
 
-    private static void wasserversorgung() {
+    private static void wasserVersorgung() {
         List<Node> graph = null;
 
         int wahl = decide();
@@ -92,7 +95,7 @@ public class UserEingabe {
         System.out.println("-------------------");
     }
 
-    public static List<Node> createGraphFF() {
+    public static List<FordFulkersonAlgorithmus.Node> createGraphFF() {
 
         List<Node> graph = new ArrayList<>();
 
@@ -172,7 +175,9 @@ public class UserEingabe {
                 throw new RuntimeException("EndKnoten nicht gefunden");
             }
 
-            Start.addEdge(End, new Edge(cap));
+            Start.addEdge(End, new FordFulkersonAlgorithmus.Edge(cap));
+            //TODO: Am ende auf null setzen
+
         }
 
         return graph;
