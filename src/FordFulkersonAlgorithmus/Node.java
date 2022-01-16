@@ -99,6 +99,33 @@ public class Node implements Comparable {
         return Optional.empty();
     }
 
+    //TODO: Bipartite Matching Implementieren -> Verfeinern für Paare
+
+    public Optional<List<Node>> path_dfs_bipartite(Node target, Set<Node> visited) {
+
+        if (edges.containsKey(target) && !edges.get(target).isFull()) {
+            List<Node> path = new ArrayList<>();
+            path.add(target);
+            path.add(this);
+
+            return Optional.of(path);
+        }
+        visited.add(this);
+        for (Node node : edges.keySet()) {
+            if (!visited.contains(node)) {
+                if (!edges.get(node).isFull()) {
+                    Optional<List<Node>> tmp = node.path_dfs(target, visited);
+
+                    if (tmp.isPresent()) {
+                        tmp.get().add(this);
+                        return tmp;
+                    }
+                }
+            }
+        }
+        return Optional.empty();
+    }
+
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : edges.entrySet()) {

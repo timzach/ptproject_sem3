@@ -67,7 +67,7 @@ public class UserEingabe {
                 break;
             case 7:
                 System.out.println("Kompetenz");
-                //FordFulkerson
+                kompetenzErmittlung();
                 break;
         }
     }
@@ -89,6 +89,29 @@ public class UserEingabe {
         System.out.println("-------------------");
         fordF.resetPrintHistory();
         int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
+        System.out.println(fordF.originalGraphToString());
+        System.out.println("-------------------");
+        System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
+        System.out.println("-------------------");
+    }
+
+    private static void kompetenzErmittlung() {
+        List<Node> graph = null;
+
+        int wahl = decide();
+
+        switch (wahl) {
+            case 1:
+                graph = createGraphFF();
+            case 2:
+                graph = Problem7.createProblemGraph();
+        }
+
+        FordF fordF = new FordF(graph);
+        System.out.println(fordF.originalGraphToString());
+        System.out.println("-------------------");
+        fordF.resetPrintHistory();
+        int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
@@ -117,6 +140,7 @@ public class UserEingabe {
             correctInputNodes = false;
         }
 
+        System.out.println("Benennen Sie Ihren Startknoten mit s und ihren Endknoten mit t.");
 
 
         for (int i = 0; i < anzahlNodes; i++) {
@@ -153,31 +177,17 @@ public class UserEingabe {
             System.out.println((i + 1) + "te Edge");
             System.out.println("Startknoten:");
             startNode = scanner.next();
+            Start = getNodeWithLabelFF(startNode, graph);
+
             System.out.println("Endknoten:");
             endNode = scanner.next();
+            End = getNodeWithLabelFF(endNode, graph);
+
             System.out.println("Kapazität: ");
             cap = scanner.nextInt();
 
-            for (Node node : graph) {
-                if (node.getLabel().equals(startNode)) {
-                    Start = node;
-                }
-                if (node.getLabel().equals(endNode)) {
-                    End = node;
-                }
-            }
-
-            if (Start == null) {
-                throw new RuntimeException("Start nicht gefunden");
-            }
-
-            if (End == null) {
-                throw new RuntimeException("EndKnoten nicht gefunden");
-            }
 
             Start.addEdge(End, new FordFulkersonAlgorithmus.Edge(cap));
-            //TODO: Am ende auf null setzen
-
         }
 
         return graph;
@@ -201,7 +211,7 @@ public class UserEingabe {
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
-        int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
+        int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
         System.out.println(fordF.originalGraphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
@@ -342,6 +352,23 @@ public class UserEingabe {
             correctInput = false;
         }
         return wahl;
+    }
+
+    public static FordFulkersonAlgorithmus.Node getNodeWithLabelFF(String name, List<FordFulkersonAlgorithmus.Node> graph) {
+
+        FordFulkersonAlgorithmus.Node tmpNode = null;
+
+        for (FordFulkersonAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                tmpNode = node;
+                return tmpNode;
+            }
+        }
+
+        if (tmpNode == null) {
+            throw new RuntimeException("Knoten " + name +" nicht im Graphen gefunden");
+        }
+        return tmpNode;
     }
 }
 
