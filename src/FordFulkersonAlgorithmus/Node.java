@@ -52,9 +52,10 @@ public class Node implements Comparable {
 
     public void addResidualEdge(Node node, Edge edge) {
         if (this.residualEdges.containsKey(node)) {
-            if (edge.getCapacity() < this.residualEdges.get(node).getCapacity()) {
-                this.edges.replace(node, edge);
-            }
+            int addCapacity = edge.getCapacity();
+            int currentCapacity = this.residualEdges.get(node).getCapacity();
+            edge.setCapacity(currentCapacity + addCapacity);
+            this.residualEdges.replace(node, edge);
         } else {
             this.residualEdges.put(node, edge);
         }

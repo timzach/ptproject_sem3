@@ -6,10 +6,6 @@ public class FordF {
 
     private List<Node> graph;
 
-
-    //TODO: residual Graph initialisieren und dann auch bei der suche nutzen
-
-
     public FordF(List<Node> graph) {
         this.graph = graph;
     }
@@ -20,13 +16,13 @@ public class FordF {
 
         int maxFlow = 0;
         //while Kanten nicht voll
-        while (!source.checkEdgesFull()) {
+        while (true) {
 
             //Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
             Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
 
             if (tmp.isEmpty()) {
-                return maxFlow;
+                break;
             }
             List<Node> reversePath = tmp.get();
             List<Node> path = new ArrayList<Node>(reversePath);
@@ -39,7 +35,7 @@ public class FordF {
                     min = tempMin;
                 }
             }
-            //TODO: neue Rückfluss-Kanten mit flow = minKap erstellen
+            //neue Rückfluss-Kanten mit cap = minKap erstellen
 
             Node previousNode = reversePath.get(0);
 

@@ -13,6 +13,10 @@ public class Edge {
         //this.flow = flow;
     }
 
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
     public int getCapacity() {
         return capacity;
     }
