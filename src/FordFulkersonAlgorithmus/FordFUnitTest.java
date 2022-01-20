@@ -12,15 +12,17 @@ public class FordFUnitTest {
     public void giveGraph() {
         List<Node> graph = createGraph();
         FordF fordF = new FordF(graph);
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
 
         int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
+        fordF.resetPrintHistory();
+        System.out.println(fordF.residualGraphToString());
     }
 
 
@@ -66,6 +68,32 @@ public class FordFUnitTest {
         Node s = new Node("s");
         Node a = new Node("A");
         Node b = new Node("B");
+        Node t = new Node("t");
+
+        Edge sa = new Edge(3);
+        s.addEdge(a, sa);
+
+        Edge sb = new Edge(2);
+        s.addEdge(b, sb);
+
+        Edge ab = new Edge(5);
+        a.addEdge(b, ab);
+
+        Edge at = new Edge(2);
+        a.addEdge(t, at);
+
+        Edge bt = new Edge(3);
+        b.addEdge(t, bt);
+
+
+        graph.add(s);
+        graph.add(b);
+        graph.add(a);
+        graph.add(t);
+
+        /*Node s = new Node("s");
+        Node a = new Node("A");
+        Node b = new Node("B");
         Node c = new Node("C");
         Node d = new Node("D");
         Node t = new Node("t");
@@ -102,7 +130,7 @@ public class FordFUnitTest {
         graph.add(c);
         graph.add(b);
         graph.add(a);
-        graph.add(t);
+        graph.add(t);*/
 
         return graph;
 

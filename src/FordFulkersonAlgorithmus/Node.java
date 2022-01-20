@@ -5,8 +5,12 @@ import java.util.*;
 public class Node implements Comparable {
 
     private String label = null;
-    private Map<Node, Edge> edges = new TreeMap<>();
+    private Map<Node, Edge> edges = new HashMap<>();
+    private Map<Node, Edge> residualEdges;
+
     private boolean isVisited = false;
+
+
 
     public Node(String label) {
         this.label = label;
@@ -46,6 +50,16 @@ public class Node implements Comparable {
         }
     }
 
+    public void addResidualEdge(Node node, Edge edge) {
+        if (this.residualEdges.containsKey(node)) {
+            if (edge.getCapacity() < this.residualEdges.get(node).getCapacity()) {
+                this.edges.replace(node, edge);
+            }
+        } else {
+            this.residualEdges.put(node, edge);
+        }
+    }
+
     public boolean checkEdgesFull() {
         for (Edge edge : edges.values()) {
             if (!edge.isFull()) {
@@ -55,20 +69,31 @@ public class Node implements Comparable {
         return true;
     }
 
-    public int getRemainingCapacity(Node target) {
-        if (this.edges.containsKey(target)) {
-            return edges.get(target).getRemainingCapacity();
+    public int getEdgeCapacity(Node target) {
+        if (this.residualEdges.containsKey(target)) {
+            return residualEdges.get(target).getCapacity();
         }
         return 0;
 
     }
 
-    public void fill(Node target, int value) {
-        if (this.edges.containsKey(target)) {
-            edges.get(target).fill(value);
+    public void reduceCapacity(Node target, int value) {
+        if (this.residualEdges.containsKey(target)) {
+            boolean tmpBoolean = residualEdges.get(target).reduceCapacity(value);
+            if (!tmpBoolean) {
+                this.residualEdges.remove(target);
+            }
             return; //damit es nicht in die Exception läuft
         }
-        throw new RuntimeException("no Edge found when trying to fill");
+        throw new RuntimeException("no Edge found when trying to reduceCapacity");
+    }
+
+    public Map<Node, Edge> getResidualEdges() {
+        return residualEdges;
+    }
+
+    public void createResidualEdges() {
+        residualEdges = new HashMap<Node, Edge>(edges);
     }
 
     public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
@@ -99,31 +124,53 @@ public class Node implements Comparable {
         return Optional.empty();
     }
 
-    //TODO: Bipartite Matching Implementieren -> Verfeinern für Paare
+    public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
+        createResidualEdges();
+        Queue<Node> nodeQueue = new LinkedList<>();
+        //Hashmap<Child Node, Parent Node>
+        Map<Node, Node> parents = new HashMap<>();
+        List<Node> path = new ArrayList<>();
 
-    public Optional<List<Node>> path_dfs_bipartite(Node target, Set<Node> visited) {
 
-        if (edges.containsKey(target) && !edges.get(target).isFull()) {
-            List<Node> path = new ArrayList<>();
-            path.add(target);
-            path.add(this);
-
-            return Optional.of(path);
-        }
+        Node source = this;
+        //Source Node in Queue
+        nodeQueue.add(this);
         visited.add(this);
-        for (Node node : edges.keySet()) {
-            if (!visited.contains(node)) {
-                if (!edges.get(node).isFull()) {
-                    Optional<List<Node>> tmp = node.path_dfs(target, visited);
 
-                    if (tmp.isPresent()) {
-                        tmp.get().add(this);
-                        return tmp;
-                    }
+        while (!nodeQueue.isEmpty()) {
+            Node currentNode = nodeQueue.poll();
+            for (Node node : currentNode.getResidualEdges().keySet()) {
+                if (!visited.contains(node)) {
+                    //if (!currentNode.getEdges().get(node).isFull()) {
+                        nodeQueue.add(node);
+                        parents.put(node, currentNode);
+                        visited.add(node);
+                        if (visited.contains(target)) {
+                            break;
+                        }
+                    //}
                 }
             }
         }
-        return Optional.empty();
+        //Überprüfen ob target gefunden wurde:
+        if (visited.contains(target)) {
+            //Den weg zurück über die parents verknüpfungen
+            //target in path schreiben
+            path.add(target);
+            //target aus parents nehmen und den parent knoten ausfindig machen
+            Node parentNode = parents.get(target);
+            //schleife bis path contains source:
+            while (!path.contains(source)) {
+                //parentknoten in path schreiben
+                path.add(parentNode);
+                //parentknoten in tmp speichern
+                Node tmpNode = parentNode;
+                //parentknoten von tmp in parentknoten schreiben
+                parentNode = parents.get(tmpNode);
+            }
+            return Optional.of(path);
+        } else
+            return Optional.empty();
     }
 
     public String originalToString() {
@@ -159,7 +206,21 @@ public class Node implements Comparable {
         return 0;
     }
 
-    public void shuffle() {
-        //Collections.shuffle(edges);
+    public String residualToString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
+            if (!pair.getValue().isPrinted()) {
+                sb.append(getLabel());
+                sb.append(" --- ");
+                sb.append(pair.getValue().getCapacity());
+                sb.append("/");
+                sb.append(pair.getValue().getFlow());
+                sb.append(" --> ");
+                sb.append(pair.getKey().getLabel());
+                sb.append("\n");
+                pair.getValue().setPrinted(true);
+            }
+        }
+        return sb.toString();
     }
 }

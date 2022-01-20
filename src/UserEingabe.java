@@ -85,11 +85,11 @@ public class UserEingabe {
         }
 
         FordF fordF = new FordF(graph);
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
         int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
@@ -108,11 +108,11 @@ public class UserEingabe {
         }
 
         FordF fordF = new FordF(graph);
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
         int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
@@ -208,11 +208,11 @@ public class UserEingabe {
         }
 
         FordF fordF = new FordF(graph);
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         fordF.resetPrintHistory();
         int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
-        System.out.println(fordF.originalGraphToString());
+        System.out.println(fordF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
