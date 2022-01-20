@@ -1,80 +1,69 @@
 package DijkstraAlgorithmus;
 
-import org.apache.commons.math3.util.Pair;
-
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Dijkstra {
 
-    private List<Node> graph;
+    private final List<Node> graph;
+    Map<Node, Integer> distance = new HashMap<>();
+    Map<Node, Node> prevNode = new HashMap<>();
+    List<Node> unsettledNodes = new ArrayList<>();
 
     public Dijkstra(List<Node> graph) {
         this.graph = graph;
     }
 
-    public void run(Node source, Node target) {
-        Map<Node, Integer> distance = new HashMap<>();
-        Map<Node, Node> prevNode = new HashMap<>();
-
-        //Initialisiere Distanz und Vorgängerknoten
+    public void run(Node source) {
+        //Distanz wird für alle Knoten auf unendlich gesetzt. Die Vorgängerknoten werden auf null gesetzt.
+        //Lediglich der Startknoten bekommt 0 als Distanz und wird als besucht markiert.
         for(Node node: graph) {
             distance.put(node, Integer.MAX_VALUE);
             prevNode.put(node, null);
-            if(node == source) {
-                distance.put(source, 0);
-                source.setVisited(true);
-
-            }
+            unsettledNodes.add(node);
+            System.out.println("Added node " + node + " to unsettledNodes");
         }
+        distance.put(source, 0);
+        System.out.println("---------------------");
 
-        while (isDisconnected()) {
-            Edge nextMinimum = new Edge(Integer.MAX_VALUE);
-            Node nextNode = graph.get(0);
-            for (Node node : graph) {
-                if (node.isVisited()) {
-                    Pair<Node, Edge> candidate = node.nextMinimum(); //Sucht das nächste Minimum
-                    if (candidate.getValue().getWeight() + distance.get(candidate) < nextMinimum.getWeight()) {
-                        nextMinimum = candidate.getValue();
-                        nextNode = candidate.getKey();
+        //Solange es unbesuchte Knoten gibt, wird die while-Schleife wiederholt.
+        while(!unsettledNodes.isEmpty()) {
+            Node u = getMinimum(unsettledNodes);
+            unsettledNodes.remove(u);
+            for(Node nodes: getAdjacentNodes(u)) {
+                //Nun werden die Distanzen aktualisiert, wenn der neue Weg kürzer ist als der alte.
+                if (unsettledNodes.contains(nodes)) {
+                    int weight = distance.get(u) + nodes.getEdges().get(u).getWeight();
+                    if (weight < distance.get(nodes)) {
+                        distance.put(nodes, weight);
+                        prevNode.put(nodes, u);
                     }
                 }
             }
-            nextMinimum.setIncluded(true);
-            nextNode.setVisited(true);
         }
-
+        System.out.println("-----------------");
+        System.out.println("FINISHED DIJKSTRA");
+        System.out.println("-----------------");
+        System.out.println("Kürzeste Distanzen: " + distance.toString());
     }
 
-    public String originalGraphToString() {
-        StringBuilder sb = new StringBuilder();
-        for (Node node : graph) {
-            sb.append(node.originalToString());
-        }
-        return sb.toString();
+    public List<Node> getAdjacentNodes(Node node) {
+        //Hier werden die adjazenten Knoten vom übergebenen Knoten zurückgegeben.
+        List<Node> adjacentNodes = new ArrayList<>(node.getEdges().keySet());
+        System.out.println("Nachbar Knoten von " + node + ": " + adjacentNodes);
+        return adjacentNodes;
     }
 
-    public void resetPrintHistory() {
-        for (Node node : graph) {
-            for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
-                pair.getValue().setPrinted(false);
+    public Node getMinimum(List<Node> unsettledNodes) {
+        //Hier wird der nächste nicht besuchte Knoten mit der geringsten Distanz zurückgegeben.
+        Node minimum = unsettledNodes.get(0);
+        for (Node node: unsettledNodes) {
+            if(distance.get(minimum) > distance.get(node)) {
+                minimum = node;
             }
         }
-    }
-
-    private boolean isDisconnected() {
-        for (Node node : graph) {
-            if (!node.isVisited()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static void printPath(List<Node> path) {
-        for (Node node : path) {
-            System.out.print(node.getLabel()+"->");
-        }
+        return minimum;
     }
 }
