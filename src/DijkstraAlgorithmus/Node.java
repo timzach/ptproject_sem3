@@ -1,13 +1,11 @@
 package DijkstraAlgorithmus;
 
-import org.apache.commons.math3.util.Pair;
-
 import java.util.HashMap;
 import java.util.Map;
 
 public class Node {
 
-    private String label = null;
+    private String label;
     private Map<Node, Edge> edges = new HashMap<>(); //Hashmap in der Liste
     private boolean isVisited = false;
 
@@ -45,61 +43,8 @@ public class Node {
         isVisited = visited;
     }
 
-
-    //Note that since nextMinimum() iterates through the edges, the time complexity of this implementation is O(V2).
-    // If we store the edges in a priority queue (sorted by weight) instead, the algorithm will perform in O(E log V).
-
-    public Pair<Node, Edge> nextMinimum() {
-        Edge nextMinimum = new Edge(Integer.MAX_VALUE);
-        Node nextNode = this;
-        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
-            if (!pair.getKey().isVisited()) {
-                if (!pair.getValue().isIncluded()) {
-                    if (pair.getValue().getWeight() < nextMinimum.getWeight()) {
-                        nextMinimum = pair.getValue();
-                        nextNode = pair.getKey();
-                    }
-                }
-            }
-        }
-        return new Pair<>(nextNode, nextMinimum);
-    }
-
-    public String originalToString() {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
-            if (!pair.getValue().isPrinted()) {
-                sb.append(getLabel());
-                sb.append(" --- ");
-                sb.append(pair.getValue().getWeight());
-                sb.append(" --- ");
-                sb.append(pair.getKey().getLabel());
-                sb.append("\n");
-                pair.getValue().setPrinted(true);
-            }
-        }
-        return sb.toString();
-    }
-
-    public String includedToString() {
-        StringBuilder sb = new StringBuilder();
-        if (isVisited()) {
-            for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
-                if (pair.getValue().isIncluded()) {
-                    if (!pair.getValue().isPrinted()) {
-                        sb.append(getLabel());
-                        sb.append(" --- ");
-                        sb.append(pair.getValue().getWeight());
-                        Edge.setSumWeight(Edge.getSumWeight() + pair.getValue().getWeight());
-                        sb.append(" --- ");
-                        sb.append(pair.getKey().getLabel());
-                        sb.append("\n");
-                        pair.getValue().setPrinted(true);
-                    }
-                }
-            }
-        }
-        return sb.toString();
+    public String toString() {
+        return getLabel();
     }
 
 }
