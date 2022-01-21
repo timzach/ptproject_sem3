@@ -5,16 +5,22 @@ public class Edge {
     private int capacity;
     private int flow = 0;
 
+
     private boolean isPrinted = false;
     private boolean isFull = false;
+    private boolean isResidual = false;
 
     public Edge(int capacity) {
         this.capacity = capacity;
         //this.flow = flow;
     }
 
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
+    public Edge(Edge edge) {
+        this.capacity = edge.getCapacity();
+    }
+
+    public void setCapacity(int newCapacity) {
+        this.capacity = newCapacity;
     }
 
     public int getCapacity() {
@@ -45,12 +51,21 @@ public class Edge {
         isPrinted = printed;
     }
 
+    public boolean isResidual() {
+        return isResidual;
+    }
+
+    public void setResidual(boolean residual) {
+        isResidual = residual;
+    }
+
     public int getRemainingCapacity() {
         return capacity - flow;
     }
 
     public boolean reduceCapacity(int value) {
-        capacity -= value;
+        setCapacity(capacity-value);
+
         if (capacity == 0) {
             return false;
         }

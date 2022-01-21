@@ -15,9 +15,13 @@ public class FordF {
         createResidualGraph();
 
         int maxFlow = 0;
+        boolean tmpBoolean = false;
         //while Kanten nicht voll
         while (true) {
 
+
+            System.out.println("-------------------");
+            resetPrintHistory();
             //Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
             Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
 
@@ -27,14 +31,20 @@ public class FordF {
             List<Node> reversePath = tmp.get();
             List<Node> path = new ArrayList<Node>(reversePath);
             Collections.reverse(path);
+            int pathSize = path.size();
                     //minimum Kapazität finden
             int min = Integer.MAX_VALUE;
             for (int i = 0; i < path.size()-1; i++) {
+//                System.out.print(path.get(i).getLabel());
                 int tempMin = path.get(i).getEdgeCapacity(path.get(i + 1));
                 if (tempMin < min) {
                     min = tempMin;
                 }
             }
+//            System.out.print(path.get(pathSize-1).getLabel());
+//            System.out.println("\n");
+//            System.out.println("-------------------");
+
             //neue Rückfluss-Kanten mit cap = minKap erstellen
 
             Node previousNode = reversePath.get(0);
@@ -81,6 +91,11 @@ public class FordF {
         for (Node node : graph) {
             for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
                 pair.getValue().setPrinted(false);
+            }
+            if (node.checkResidualHasContent()) {
+                for (Map.Entry<Node, Edge> pair : node.getResidualEdges().entrySet()) {
+                    pair.getValue().setPrinted(false);
+                }
             }
         }
     }

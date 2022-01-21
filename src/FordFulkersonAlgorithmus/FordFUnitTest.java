@@ -63,9 +63,9 @@ public class FordFUnitTest {
 
     public static List<Node> createGraph() {
 
-        //List<Node> graph = new ArrayList<>();
+        /*List<Node> graph = new ArrayList<>();
 
-        /*Node s = new Node("s");
+        Node s = new Node("s");
         Node a = new Node("A");
         Node b = new Node("B");
         Node c = new Node("C");

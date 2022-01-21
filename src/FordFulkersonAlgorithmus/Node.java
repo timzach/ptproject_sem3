@@ -57,17 +57,9 @@ public class Node implements Comparable {
             edge.setCapacity(currentCapacity + addCapacity);
             this.residualEdges.replace(node, edge);
         } else {
+            edge.setResidual(true);
             this.residualEdges.put(node, edge);
         }
-    }
-
-    public boolean checkEdgesFull() {
-        for (Edge edge : edges.values()) {
-            if (!edge.isFull()) {
-                return false;
-            }
-        }
-        return true;
     }
 
     public int getEdgeCapacity(Node target) {
@@ -82,9 +74,12 @@ public class Node implements Comparable {
         if (this.residualEdges.containsKey(target)) {
             boolean tmpBoolean = residualEdges.get(target).reduceCapacity(value);
             if (!tmpBoolean) {
-                this.residualEdges.remove(target);
+                if (this.residualEdges.remove(target) == null) {
+                    throw new RuntimeException("hat nichts entfernt");
+                }
+
             }
-            return; //damit es nicht in die Exception läuft
+            return; //returns true wenn es schon eine rückfluss edge ist
         }
         throw new RuntimeException("no Edge found when trying to reduceCapacity");
     }
@@ -94,7 +89,11 @@ public class Node implements Comparable {
     }
 
     public void createResidualEdges() {
-        residualEdges = new HashMap<Node, Edge>(edges);
+        residualEdges = new HashMap<>();
+
+        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
+            residualEdges.put(pair.getKey(), new Edge(pair.getValue()));
+        }
     }
 
     public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
@@ -126,7 +125,7 @@ public class Node implements Comparable {
     }
 
     public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
-        createResidualEdges();
+
         Queue<Node> nodeQueue = new LinkedList<>();
         //Hashmap<Child Node, Parent Node>
         Map<Node, Node> parents = new HashMap<>();
@@ -192,12 +191,6 @@ public class Node implements Comparable {
         return sb.toString();
     }
 
-    public void reset() {
-        edges.forEach((k, v) -> {
-            v.reset();
-        });
-    }
-
     @Override
     public int compareTo(Object o) {
         if (o instanceof Node) {
@@ -210,18 +203,29 @@ public class Node implements Comparable {
     public String residualToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
-            if (!pair.getValue().isPrinted()) {
-                sb.append(getLabel());
-                sb.append(" --- ");
-                sb.append(pair.getValue().getCapacity());
-                sb.append("/");
-                sb.append(pair.getValue().getFlow());
-                sb.append(" --> ");
-                sb.append(pair.getKey().getLabel());
-                sb.append("\n");
-                pair.getValue().setPrinted(true);
+            if (pair.getValue().isResidual()) {
+                if (!pair.getValue().isPrinted()) {
+                    sb.append(getLabel());
+                    sb.append(" --- ");
+                    sb.append(pair.getValue().getCapacity());
+                    sb.append("/");
+                    sb.append(pair.getValue().getFlow());
+                    sb.append(" --> ");
+                    sb.append(pair.getKey().getLabel());
+                    sb.append("\n");
+                    pair.getValue().setPrinted(true);
+                }
             }
+
         }
         return sb.toString();
+    }
+
+    public boolean checkResidualHasContent() {
+        if (this.residualEdges == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
