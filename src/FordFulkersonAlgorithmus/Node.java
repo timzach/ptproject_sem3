@@ -5,8 +5,12 @@ import java.util.*;
 public class Node implements Comparable {
 
     private String label = null;
-    private Map<Node, Edge> edges = new TreeMap<>();
+    private Map<Node, Edge> edges = new HashMap<>();
+    private Map<Node, Edge> residualEdges;
+
     private boolean isVisited = false;
+
+
 
     public Node(String label) {
         this.label = label;
@@ -46,29 +50,50 @@ public class Node implements Comparable {
         }
     }
 
-    public boolean checkEdgesFull() {
-        for (Edge edge : edges.values()) {
-            if (!edge.isFull()) {
-                return false;
-            }
+    public void addResidualEdge(Node node, Edge edge) {
+        if (this.residualEdges.containsKey(node)) {
+            int addCapacity = edge.getCapacity();
+            int currentCapacity = this.residualEdges.get(node).getCapacity();
+            edge.setCapacity(currentCapacity + addCapacity);
+            this.residualEdges.replace(node, edge);
+        } else {
+            edge.setResidual(true);
+            this.residualEdges.put(node, edge);
         }
-        return true;
     }
 
-    public int getRemainingCapacity(Node target) {
-        if (this.edges.containsKey(target)) {
-            return edges.get(target).getRemainingCapacity();
+    public int getEdgeCapacity(Node target) {
+        if (this.residualEdges.containsKey(target)) {
+            return residualEdges.get(target).getCapacity();
         }
         return 0;
 
     }
 
-    public void fill(Node target, int value) {
-        if (this.edges.containsKey(target)) {
-            edges.get(target).fill(value);
-            return; //damit es nicht in die Exception läuft
+    public void reduceCapacity(Node target, int value) {
+        if (this.residualEdges.containsKey(target)) {
+            boolean tmpBoolean = residualEdges.get(target).reduceCapacity(value);
+            if (!tmpBoolean) {
+                if (this.residualEdges.remove(target) == null) {
+                    throw new RuntimeException("hat nichts entfernt");
+                }
+
+            }
+            return; //returns true wenn es schon eine rückfluss edge ist
         }
-        throw new RuntimeException("no Edge found when trying to fill");
+        throw new RuntimeException("no Edge found when trying to reduceCapacity");
+    }
+
+    public Map<Node, Edge> getResidualEdges() {
+        return residualEdges;
+    }
+
+    public void createResidualEdges() {
+        residualEdges = new HashMap<>();
+
+        for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
+            residualEdges.put(pair.getKey(), new Edge(pair.getValue()));
+        }
     }
 
     public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
@@ -99,6 +124,55 @@ public class Node implements Comparable {
         return Optional.empty();
     }
 
+    public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
+
+        Queue<Node> nodeQueue = new LinkedList<>();
+        //Hashmap<Child Node, Parent Node>
+        Map<Node, Node> parents = new HashMap<>();
+        List<Node> path = new ArrayList<>();
+
+
+        Node source = this;
+        //Source Node in Queue
+        nodeQueue.add(this);
+        visited.add(this);
+
+        while (!nodeQueue.isEmpty()) {
+            Node currentNode = nodeQueue.poll();
+            for (Node node : currentNode.getResidualEdges().keySet()) {
+                if (!visited.contains(node)) {
+                    //if (!currentNode.getEdges().get(node).isFull()) {
+                        nodeQueue.add(node);
+                        parents.put(node, currentNode);
+                        visited.add(node);
+                        if (visited.contains(target)) {
+                            break;
+                        }
+                    //}
+                }
+            }
+        }
+        //Überprüfen ob target gefunden wurde:
+        if (visited.contains(target)) {
+            //Den weg zurück über die parents verknüpfungen
+            //target in path schreiben
+            path.add(target);
+            //target aus parents nehmen und den parent knoten ausfindig machen
+            Node parentNode = parents.get(target);
+            //schleife bis path contains source:
+            while (!path.contains(source)) {
+                //parentknoten in path schreiben
+                path.add(parentNode);
+                //parentknoten in tmp speichern
+                Node tmpNode = parentNode;
+                //parentknoten von tmp in parentknoten schreiben
+                parentNode = parents.get(tmpNode);
+            }
+            return Optional.of(path);
+        } else
+            return Optional.empty();
+    }
+
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
@@ -117,12 +191,6 @@ public class Node implements Comparable {
         return sb.toString();
     }
 
-    public void reset() {
-        edges.forEach((k, v) -> {
-            v.reset();
-        });
-    }
-
     @Override
     public int compareTo(Object o) {
         if (o instanceof Node) {
@@ -132,7 +200,32 @@ public class Node implements Comparable {
         return 0;
     }
 
-    public void shuffle() {
-        //Collections.shuffle(edges);
+    public String residualToString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
+            if (pair.getValue().isResidual()) {
+                if (!pair.getValue().isPrinted()) {
+                    sb.append(getLabel());
+                    sb.append(" --- ");
+                    sb.append(pair.getValue().getCapacity());
+                    sb.append("/");
+                    sb.append(pair.getValue().getFlow());
+                    sb.append(" --> ");
+                    sb.append(pair.getKey().getLabel());
+                    sb.append("\n");
+                    pair.getValue().setPrinted(true);
+                }
+            }
+
+        }
+        return sb.toString();
+    }
+
+    public boolean checkResidualHasContent() {
+        if (this.residualEdges == null) {
+            return false;
+        } else {
+            return true;
+        }
     }
 }
