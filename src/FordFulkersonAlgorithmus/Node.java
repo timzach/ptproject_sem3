@@ -2,15 +2,14 @@ package FordFulkersonAlgorithmus;
 
 import java.util.*;
 
-public class Node implements Comparable {
+public class Node {
 
     private String label = null;
+    /**
+     * Hashmap "edges" speichert den Zielknoten als Key und die Kante als Value
+     */
     private Map<Node, Edge> edges = new HashMap<>();
     private Map<Node, Edge> residualEdges;
-
-    private boolean isVisited = false;
-
-
 
     public Node(String label) {
         this.label = label;
@@ -32,17 +31,14 @@ public class Node implements Comparable {
         this.edges = edges;
     }
 
-    public boolean isVisited() {
-        return isVisited;
-    }
-
-    public void setVisited(boolean visited) {
-        isVisited = visited;
-    }
-
+    /**
+     * Fuegt eine Kante hinzu, wenn bereits eine Kante mit geringer Kapazitaet existiert wird diese durch die neue Kante ersetzt.
+     * @param node Zielknoten der Kante
+     * @param edge Die Kante zum hinzufügen
+     */
     public void addEdge(Node node, Edge edge) {
         if (this.edges.containsKey(node)) {
-            if (edge.getCapacity() < this.edges.get(node).getCapacity()) {
+            if (edge.getCapacity() > this.edges.get(node).getCapacity()) {
                 this.edges.replace(node, edge);
             }
         } else {
@@ -50,6 +46,11 @@ public class Node implements Comparable {
         }
     }
 
+    /**
+     * Fuegt eine Rueckfluss-Kante hinzu oder erhoeht die Kapazität wenn diese Kante bereits existiert.
+     * @param node Zielknoten der Kante
+     * @param edge Die Kante zum hinzufuegen
+     */
     public void addResidualEdge(Node node, Edge edge) {
         if (this.residualEdges.containsKey(node)) {
             int addCapacity = edge.getCapacity();
@@ -62,6 +63,11 @@ public class Node implements Comparable {
         }
     }
 
+    /**
+     * Wenn der Knoten die Kante besitzt gibt es die Kapazitaet zurueck
+     * @param target Zielknoten der Kante
+     * @return Kapazitaet als Integer
+     */
     public int getEdgeCapacity(Node target) {
         if (this.residualEdges.containsKey(target)) {
             return residualEdges.get(target).getCapacity();
@@ -70,24 +76,32 @@ public class Node implements Comparable {
 
     }
 
+    /**
+     * Wenn der Knoten die Kante hat reduziert sie dessen Kapazitaet.
+     * <p>Wenn die Kapazitaet gleich O ist wird die Kante geloescht</p>
+     * @param target Zielknoten der Kante
+     * @param value Wert wie viel die Kapazitaet reduziert wird
+     */
     public void reduceCapacity(Node target, int value) {
         if (this.residualEdges.containsKey(target)) {
-            boolean tmpBoolean = residualEdges.get(target).reduceCapacity(value);
-            if (!tmpBoolean) {
+            if (!residualEdges.get(target).reduceCapacity(value)) {
                 if (this.residualEdges.remove(target) == null) {
                     throw new RuntimeException("hat nichts entfernt");
                 }
 
             }
-            return; //returns true wenn es schon eine rückfluss edge ist
+        } else {
+            throw new RuntimeException("no Edge found when trying to reduceCapacity");
         }
-        throw new RuntimeException("no Edge found when trying to reduceCapacity");
     }
 
     public Map<Node, Edge> getResidualEdges() {
         return residualEdges;
     }
 
+    /**
+     * Erstellt eine Kopie der Hashmap edges in residualEdges.
+     */
     public void createResidualEdges() {
         residualEdges = new HashMap<>();
 
@@ -124,6 +138,12 @@ public class Node implements Comparable {
         return Optional.empty();
     }
 
+    /**
+     * Sucht einen Weg zu einem Knoten mit der Breitensuche
+     * @param target Zielknoten
+     * @param visited Leeres Set um besuchte Knoten zu speichern
+     * @return Den Weg zum Zielknoten, wenn keiner mehr vorhanden dann gibt es eine leere Liste zurueck.
+     */
     public Optional<List<Node>> path_bfs(Node target, Set<Node> visited) {
 
         Queue<Node> nodeQueue = new LinkedList<>();
@@ -173,6 +193,10 @@ public class Node implements Comparable {
             return Optional.empty();
     }
 
+    /**
+     * Generiert die Ausgabe fuer den Basis-Graphen
+     * @return String der Ausgabe
+     */
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
@@ -191,15 +215,10 @@ public class Node implements Comparable {
         return sb.toString();
     }
 
-    @Override
-    public int compareTo(Object o) {
-        if (o instanceof Node) {
-            Node tmp = (Node) o;
-            return tmp.label.compareTo(this.label);
-        }
-        return 0;
-    }
-
+    /**
+     * Generiert die Ausgabe fuer den Graphen mit den Rueckflusskanten
+     * @return String der Ausgabe
+     */
     public String residualToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
@@ -221,6 +240,10 @@ public class Node implements Comparable {
         return sb.toString();
     }
 
+    /**
+     * Ueberprueft den Inhalt in residualEdges
+     * @return true, wenn die Hashmap Inhalt hat <p>false, wenn keine Rueckflusskanten vorhanden sind</p>
+     */
     public boolean checkResidualHasContent() {
         if (this.residualEdges == null) {
             return false;

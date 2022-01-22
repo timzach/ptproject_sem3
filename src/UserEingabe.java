@@ -72,6 +72,9 @@ public class UserEingabe {
         }
     }
 
+    /**
+     * Programm für die Loesung des Wasserversorgung Problems.
+     */
     private static void wasserVersorgung() {
         List<Node> graph = null;
 
@@ -95,6 +98,9 @@ public class UserEingabe {
         System.out.println("-------------------");
     }
 
+    /**
+     * Programm für die Loesung des Kompetenz Problems.
+     */
     private static void kompetenzErmittlung() {
         List<Node> graph = null;
 
@@ -118,6 +124,10 @@ public class UserEingabe {
         System.out.println("-------------------");
     }
 
+    /**
+     * Generiert den Graphen fuer einen MaxFlow Algorithmus
+     * @return Graphen des MaxFlow Algo
+     */
     public static List<FordFulkersonAlgorithmus.Node> createGraphFF() {
 
         List<Node> graph = new ArrayList<>();
@@ -194,6 +204,9 @@ public class UserEingabe {
 
     }
 
+    /**
+     * Programm fuer die Loesung des Strassenverteilung Problems.
+     */
     public static void strassenVerteilung() {
 
         List<Node> graph = null;
@@ -218,6 +231,9 @@ public class UserEingabe {
         System.out.println("-------------------");
     }
 
+    /**
+     * Programm fuer die Loesung des Strassenbau Problems.
+     */
     public static void strassenbau() {
 
         List<PrimAlgorithmus.Node> graph = null;
@@ -241,6 +257,10 @@ public class UserEingabe {
         System.out.println("Gesamtsumme: " + PrimAlgorithmus.Edge.getSumWeight());
     }
 
+    /**
+     * Generiert den Graphen fuer einen Prim Algorithmus
+     * @return Graphen des Prim Algo
+     */
     private static List<PrimAlgorithmus.Node> createGraphPrim() {
         List<PrimAlgorithmus.Node> graph = new ArrayList<>();
 
@@ -327,6 +347,10 @@ public class UserEingabe {
 
     }
 
+    /**
+     * Beinhaltet die Wahl zwischen den 2 Graphtypen
+     * @return Integer der Wahl
+     */
     public static int decide() {
         Scanner scanner = new Scanner(System.in);
 
@@ -354,6 +378,12 @@ public class UserEingabe {
         return wahl;
     }
 
+    /**
+     * Findet den Knoten mit dem passenden Label.
+     * @param name Name des Knoten
+     * @param graph Graph in dem der Knoten gesucht wird
+     * @return Knoten mit dem passenden Namen
+     */
     public static FordFulkersonAlgorithmus.Node getNodeWithLabelFF(String name, List<FordFulkersonAlgorithmus.Node> graph) {
 
         FordFulkersonAlgorithmus.Node tmpNode = null;

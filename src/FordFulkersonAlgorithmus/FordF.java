@@ -10,6 +10,12 @@ public class FordF {
         this.graph = graph;
     }
 
+    /**
+     * Findet den MaxFlow zwischen einem Start- und Endknoten
+     * @param source Startknoten
+     * @param target Zielknoten
+     * @return MaxFlow als Integer
+     */
     public int run(Node source, Node target) {
 
         createResidualGraph();
@@ -71,6 +77,9 @@ public class FordF {
         return maxFlow;
     }
 
+    /**
+     * @return String des Anfangsgraphen
+     */
     public String graphToString() {
         StringBuilder sb = new StringBuilder();
         for (Node node : graph) {
@@ -79,6 +88,9 @@ public class FordF {
         return sb.toString();
     }
 
+    /**
+     * @return String des Rueckflussgraphen
+     */
     public String residualGraphToString() {
         StringBuilder sb = new StringBuilder();
         for (Node node : graph) {
@@ -87,6 +99,9 @@ public class FordF {
         return sb.toString();
     }
 
+    /**
+     * Setzt den Wert isPrinted bei jedem Knoten im Graphen zurueck.
+     */
     public void resetPrintHistory() {
         for (Node node : graph) {
             for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
@@ -100,6 +115,9 @@ public class FordF {
         }
     }
 
+    /**
+     * Kopiert fuer jeden Knoten die Rueckflussedges
+     */
     public void createResidualGraph() {
         for (Node node : graph) {
             node.createResidualEdges();

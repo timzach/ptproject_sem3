@@ -27,6 +27,11 @@ public class Node {
         return edges;
     }
 
+    /**
+     * Fuegt eine Kante hinzu, wenn bereits eine Kante mit hoeherem Gewicht existiert wird diese durch die neue Kante ersetzt.
+     * @param node Zielknoten der Kante
+     * @param edge Die Kante zum hinzufuegen
+     */
     public void addEdge(Node node, Edge edge) {
         if (this.edges.containsKey(node)) {
             if (edge.getWeight() < this.edges.get(node).getWeight()) {
@@ -49,6 +54,10 @@ public class Node {
     //Note that since nextMinimum() iterates through the edges, the time complexity of this implementation is O(V2).
     // If we store the edges in a priority queue (sorted by weight) instead, the algorithm will perform in O(E log V).
 
+    /**
+     * Sucht die kuerzeste ausgehende Kante
+     * @return Gibt die kuerzeste Kante sowie dessen Zielknoten zurück
+     */
     public Pair<Node, Edge> nextMinimum() {
         Edge nextMinimum = new Edge(Integer.MAX_VALUE);
         Node nextNode = this;
@@ -65,6 +74,10 @@ public class Node {
         return new Pair<>(nextNode, nextMinimum);
     }
 
+    /**
+     * Generiert die Ausgabe fuer den Start-Graphen
+     * @return String der Ausgabe
+     */
     public String originalToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
@@ -81,6 +94,10 @@ public class Node {
         return sb.toString();
     }
 
+    /**
+     * Generiert die Ausgabe fuer den End-Graphen
+     * @return String der Ausgabe
+     */
     public String includedToString() {
         StringBuilder sb = new StringBuilder();
         if (isVisited()) {

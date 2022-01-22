@@ -2,10 +2,9 @@ package PrimAlgorithmus;
 
 public class Edge {
 
-
-
     private int weight;
     public static int SumWeight;
+
     private boolean isIncluded = false;
     private boolean isPrinted = false;
 
