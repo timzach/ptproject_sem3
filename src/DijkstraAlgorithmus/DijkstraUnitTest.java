@@ -12,105 +12,77 @@ public class DijkstraUnitTest {
         List<Node> graph = createGraph();
         Dijkstra dijkstra = new Dijkstra(graph);
         dijkstra.run(graph.get(0));
+        int i = 1;
+        System.out.println("Reihenfolge des Feuerwerks:");
+        for(Object entries: dijkstra.getDistance()) {
+            System.out.println(i + ". " + entries);
+            i++;
+        }
     }
 
     public static List<Node> createGraph() {
 
         List<Node> graph = new ArrayList<>();
 
+        Node s = new Node("Streichholz");
+        Node a = new Node("Feuerwerk 1");
+        Node b = new Node("Feuerwerk 2");
+        Node c = new Node("Feuerwerk 3");
+        Node d = new Node("Feuerwerk 4");
+        Node e = new Node("Feuerwerk 5");
+        Node f = new Node("Feuerwerk 6");
+        Node g = new Node("Feuerwerk 7");
+        Node h = new Node("Feuerwerk 8");
 
-        Node a = new Node("A");
-        Node b = new Node("B");
-        Node c = new Node("C");
-        Node d = new Node("D");
-        Node e = new Node("E");
-        Node f = new Node("F");
-        Node g = new Node("G");
-        Node h = new Node("H");
-        Node i = new Node("I");
-        Node j = new Node("J");
+        Edge sa = new Edge(2);
+        s.addEdge(a, sa);
+        a.addEdge(s, sa);
 
-
-        Edge ab = new Edge(5);
+        Edge ab = new Edge(7);
         a.addEdge(b, ab);
         b.addEdge(a, ab);
+
+        Edge ac = new Edge(2);
+        a.addEdge(c, ac);
+        c.addEdge(a, ac);
+
+        Edge ae = new Edge(8);
+        a.addEdge(e, ae);
+        e.addEdge(a, ae);
 
         Edge bc = new Edge(3);
         b.addEdge(c, bc);
         c.addEdge(b, bc);
 
-        Edge ad = new Edge(3);
-        a.addEdge(d, ad);
-        d.addEdge(a, ad);
+        Edge ce = new Edge(5);
+        c.addEdge(e, ce);
+        e.addEdge(c, ce);
 
-        Edge ae = new Edge(4);
-        a.addEdge(e, ae);
-        e.addEdge(a, ae);
+        Edge de = new Edge(6);
+        d.addEdge(e, de);
+        e.addEdge(d, de);
 
-        Edge ed = new Edge(5);
-        e.addEdge(d, ed);
-        d.addEdge(e, ed);
-
-        Edge db = new Edge(3);
-        d.addEdge(b, db);
-        b.addEdge(d, db);
-
-        Edge df = new Edge(3);
+        Edge df = new Edge(1);
         d.addEdge(f, df);
         f.addEdge(d, df);
 
-        Edge bf = new Edge(2);
-        b.addEdge(f, bf);
-        f.addEdge(b, bf);
-
-        Edge bj = new Edge(4);
-        b.addEdge(j, bj);
-        j.addEdge(b, bj);
-
-        Edge cj = new Edge(2);
-        c.addEdge(j, cj);
-        j.addEdge(c, cj);
-
-        Edge fj = new Edge(3);
-        f.addEdge(j, fj);
-        j.addEdge(f, fj);
-
-        Edge dg = new Edge(4);
+        Edge dg = new Edge(6);
         d.addEdge(g, dg);
         g.addEdge(d, dg);
 
-        Edge eg = new Edge(4);
-        e.addEdge(g, eg);
-        g.addEdge(e, eg);
-
-        Edge eh = new Edge(2);
+        Edge eh = new Edge(4);
         e.addEdge(h, eh);
         h.addEdge(e, eh);
 
-        Edge hg = new Edge(3);
-        h.addEdge(g, hg);
-        g.addEdge(h, hg);
+        Edge fg = new Edge(6);
+        f.addEdge(g, fg);
+        g.addEdge(f, fg);
 
-        Edge hi = new Edge(4);
-        h.addEdge(i, hi);
-        i.addEdge(h, hi);
+        Edge fh = new Edge(5);
+        f.addEdge(h, fh);
+        h.addEdge(f, fh);
 
-        Edge gi = new Edge(2);
-        g.addEdge(i, gi);
-        i.addEdge(g, gi);
-
-        Edge gf = new Edge(4);
-        g.addEdge(f, gf);
-        f.addEdge(g, gf);
-
-        Edge fi = new Edge(3);
-        f.addEdge(i, fi);
-        i.addEdge(f, fi);
-
-        Edge ij = new Edge(4);
-        i.addEdge(j, ij);
-        j.addEdge(i, ij);
-
+        graph.add(s);
         graph.add(a);
         graph.add(b);
         graph.add(c);
@@ -119,8 +91,6 @@ public class DijkstraUnitTest {
         graph.add(f);
         graph.add(g);
         graph.add(h);
-        graph.add(i);
-        graph.add(j);
 
         return graph;
     }

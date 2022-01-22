@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Dijkstra {
 
@@ -44,9 +45,8 @@ public class Dijkstra {
             }
         }
         System.out.println("-----------------");
-        System.out.println("FINISHED DIJKSTRA");
-        System.out.println("-----------------");
         System.out.println("Kürzeste Distanzen: " + distance.toString());
+        System.out.println("-----------------");
     }
 
     public List<Node> getAdjacentNodes(Node node) {
@@ -66,4 +66,9 @@ public class Dijkstra {
         }
         return minimum;
     }
+
+    public Object[] getDistance() {
+        return distance.entrySet().stream().sorted(Map.Entry.comparingByValue()).toArray();
+    }
+
 }
