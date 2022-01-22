@@ -2,27 +2,22 @@ package EulerTourAlgorithmus;
 
 public class Edge {
 
-    private int weight;
-    private boolean isIncluded = false;
+    private String label;
 
-    public Edge(int weight) {
-        this.weight = weight;
+    public Edge(String label) {
+        this.label = label;
     }
 
-    public int getWeight() {
-        return weight;
+    public String getLabel() {
+        return label;
     }
 
-    public void setWeight(int weight) {
-        this.weight = weight;
+    public void setLabel(String label) {
+        this.label = label;
     }
 
-    public boolean isIncluded() {
-        return isIncluded;
+    @Override
+    public String toString() {
+        return label;
     }
-
-    public void setIncluded(boolean included) {
-        isIncluded = included;
-    }
-
 }
