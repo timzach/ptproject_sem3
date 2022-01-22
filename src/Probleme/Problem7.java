@@ -4,8 +4,14 @@ import FordFulkersonAlgorithmus.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+/**
+ * Klasse fuer das Kompetenz-Problem
+ */
 public class Problem7 {
+    /**
+     * Die Methode generiert den Problem-Graphen
+     * @return den Problem-Graphen
+     */
     public static List<Node> createProblemGraph() {
 
         List<Node> graph = new ArrayList<>();

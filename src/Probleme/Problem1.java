@@ -6,7 +6,15 @@ import PrimAlgorithmus.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasse fuer das Strassenbau-Problem
+ */
 public class Problem1 {
+
+    /**
+     * Die Methode generiert den Problem-Graphen
+     * @return den Problem-Graphen
+     */
     public static List<Node> createProblemGraph() {
         List<Node> graph = new ArrayList<>();
 

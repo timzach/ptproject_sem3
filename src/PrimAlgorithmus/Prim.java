@@ -12,6 +12,9 @@ public class Prim {
         this.graph = graph;
     }
 
+    /**
+     * Findet den Minimum Spanning Tree (MST) im Graphen.
+     */
     public void run() {
         if (graph.size() > 0) {
             graph.get(0).setVisited(true);
@@ -34,6 +37,10 @@ public class Prim {
         }
     }
 
+    /**
+     * Checkt ob alle alle Knoten im Graphen bereits besucht sind.
+     * @return true, wenn Knoten noch nicht besucht wurden<p>false, wenn ale Knoten noch nicht besucht sind</p>
+     */
     private boolean isDisconnected() {
         for (Node node : graph) {
             if (!node.isVisited()) {
@@ -43,6 +50,9 @@ public class Prim {
         return false;
     }
 
+    /**
+     * @return String des Anfangsgraphen
+     */
     public String originalGraphToString() {
         StringBuilder sb = new StringBuilder();
         for (Node node : graph) {
@@ -51,6 +61,9 @@ public class Prim {
         return sb.toString();
     }
 
+    /**
+     * Setzt den Wert isPrinted bei jedem Knoten im Graphen zurueck
+     */
     public void resetPrintHistory() {
         for (Node node : graph) {
             for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
@@ -59,6 +72,9 @@ public class Prim {
         }
     }
 
+    /**
+     * @return String des MST
+     */
     public String minimumSpanningTreeToString() {
         StringBuilder sb = new StringBuilder();
         for (Node node : graph) {

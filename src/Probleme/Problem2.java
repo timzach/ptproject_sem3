@@ -6,7 +6,14 @@ import FordFulkersonAlgorithmus.Node;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Klasse fuer das Wasserversorgung-Problem
+ */
 public class Problem2 {
+    /**
+     * Die Methode generiert den Problem-Graphen
+     * @return den Problem-Graphen
+     */
     public static List<Node> createProblemGraph() {
         List<Node> graph = new ArrayList<>();
 
