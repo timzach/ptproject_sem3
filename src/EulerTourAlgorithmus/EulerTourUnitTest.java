@@ -8,10 +8,16 @@ import java.util.List;
 public class EulerTourUnitTest {
 
     @Test
-    public void testEulerGraph1() {
+    public void testEulerGraph() {
         List<Node> graph = new ArrayList<>(createGraph());
         EulerTour euler = new EulerTour(graph);
         euler.run(graph.get(0));
+        List<Node> tour = euler.getTour();
+        System.out.print("Weg");
+        for (Node entries : tour) {
+            System.out.print(" -> " + entries);
+        }
+        System.out.println();
     }
 
     @Test
@@ -19,6 +25,12 @@ public class EulerTourUnitTest {
         List<Node> graph = new ArrayList<>(createGraph2());
         EulerTour euler = new EulerTour(graph);
         euler.run(graph.get(0));
+        List<Node> tour = euler.getTour();
+        System.out.print("Weg");
+        for (Node entries : tour) {
+            System.out.print(" -> " + entries);
+        }
+        System.out.println();
     }
 
     @Test
@@ -26,6 +38,57 @@ public class EulerTourUnitTest {
         List<Node> graph = new ArrayList<>(createGraph3());
         EulerTour euler = new EulerTour(graph);
         euler.run(graph.get(0));
+        List<Node> tour = euler.getTour();
+        System.out.print("Weg");
+        for (Node entries : tour) {
+            System.out.print(" -> " + entries);
+        }
+        System.out.println();
+    }
+
+    @Test
+    public void testEulerGraphLoop() {
+        for(int i = 0; i < 7; i++) {
+            List<Node> graph = new ArrayList<>(createGraph());
+            EulerTour euler = new EulerTour(graph);
+            euler.run(graph.get(i));
+            List<Node> tour = euler.getTour();
+            System.out.print("Weg");
+            for (Node entries : tour) {
+                System.out.print(" -> " + entries);
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testEulerGraphLoop2() {
+        for(int i = 0; i < 11; i++) {
+            List<Node> graph = new ArrayList<>(createGraph2());
+            EulerTour euler = new EulerTour(graph);
+            euler.run(graph.get(i));
+            List<Node> tour = euler.getTour();
+            System.out.print("Weg");
+            for (Node entries : tour) {
+                System.out.print(" -> " + entries);
+            }
+            System.out.println();
+        }
+    }
+
+    @Test
+    public void testEulerGraphLoop3() {
+        for(int i = 0; i < 9; i++) {
+            List<Node> graph = new ArrayList<>(createGraph3());
+            EulerTour euler = new EulerTour(graph);
+            euler.run(graph.get(i));
+            List<Node> tour = euler.getTour();
+            System.out.print("Weg");
+            for (Node entries : tour) {
+                System.out.print(" -> " + entries);
+            }
+            System.out.println();
+        }
     }
 
     public static List<Node> createGraph() {
