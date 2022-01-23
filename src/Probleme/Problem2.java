@@ -26,7 +26,7 @@ public class Problem2 {
         Node h = new Node("h");
         Node s = new Node("s");
 
-        Edge wt = new Edge(15000);
+        Edge wt = new Edge(15);
         w.addEdge(t, wt);
 
         Edge wi = new Edge(6);

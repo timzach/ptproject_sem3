@@ -12,10 +12,8 @@ public class MaxFlowUnitTest {
 //        testForest(graphen,"s","t");
         MaxF maxF = new MaxF(graph);
         System.out.println(maxF.graphToString());
-        System.out.println("-------------------");
         maxF.resetPrintHistory();
         int maxFlow = maxF.run(graph.get(0),graph.get(graph.size()-1));
-        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
@@ -26,7 +24,7 @@ public class MaxFlowUnitTest {
 
     private List<Node> createGraph() {
 
-                /*List<Node> graph = new ArrayList<>();
+        List<Node> graph = new ArrayList<>();
 
         Node s = new Node("s");
         Node a = new Node("A");
@@ -67,9 +65,9 @@ public class MaxFlowUnitTest {
         graph.add(c);
         graph.add(b);
         graph.add(a);
-        graph.add(t);*/
+        graph.add(t);
 
-        List<Node> graph = new ArrayList<>();
+        /*List<Node> graph = new ArrayList<>();
 
         Node s = new Node("s");
 
@@ -198,7 +196,7 @@ public class MaxFlowUnitTest {
         graph.add(hochzeitsplanung);
         graph.add(wasserversorgung);
         graph.add(wettkampfausrichtung);
-        graph.add(t);
+        graph.add(t);*/
 
         return graph;
     }

@@ -37,7 +37,7 @@ public class MaxF {
             List<Node> reversePath = tmp.get();
             List<Node> path = new ArrayList<Node>(reversePath);
             Collections.reverse(path);
-            int pathSize = path.size();
+//            int pathSize = path.size();
                     //minimum Kapazität finden
             int min = Integer.MAX_VALUE;
             for (int i = 0; i < path.size()-1; i++) {
@@ -100,6 +100,17 @@ public class MaxF {
     }
 
     /**
+     * @return String der Rueckflusskanten fuer die Strassenverteilung
+     */
+    public String residualGraphToStringParking() {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : graph) {
+            sb.append(node.residualToStringParking());
+        }
+        return sb.toString();
+    }
+
+    /**
      * Setzt den Wert isPrinted bei jedem Knoten im Graphen zurueck.
      */
     public void resetPrintHistory() {
@@ -139,7 +150,7 @@ public class MaxF {
     }
 
     /**
-     * @return String des Rueckflussgraphen ohne die Knoten s & t.
+     * @return String des Rueckflussgraphen ohne die Knoten s&t.
      */
     public String residualGraphToStringMatching() {
         StringBuilder sb = new StringBuilder();
@@ -148,4 +159,28 @@ public class MaxF {
         }
         return sb.toString();
     }
+
+    /**
+     * @return String des Rueckflussgraphen ohne die Knoten s&t fuer das Kompetenz Problem.
+     */
+    public String residualGraphToStringMatchingKompetenz() {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : graph) {
+            sb.append(node.residualToStringMatchingKompetenz());
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * @return String des Rueckflussgraphen ohne die Knoten s&t fuer das Paar Problem.
+     */
+    public String residualGraphToStringMatchingPaare() {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : graph) {
+            sb.append(node.residualToStringMatchingPaare());
+        }
+        return sb.toString();
+    }
+
 }

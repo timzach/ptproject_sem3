@@ -19,21 +19,21 @@ public class Problem7 {
         Node s = new Node("s");
         Node t = new Node("t");
 
-        Node maier = new Node("Maier");
-        Node mueller = new Node("Mueller");
-        Node augst = new Node("Augst");
-        Node schmidt = new Node("Schmidt");
-        Node kunze = new Node("Kunze");
-        Node hof = new Node("Hof");
-        Node lustig = new Node("Lustig");
+        Node maier = new Node("Maier", 1);
+        Node mueller = new Node("Mueller", 1);
+        Node augst = new Node("Augst", 1);
+        Node schmidt = new Node("Schmidt", 1);
+        Node kunze = new Node("Kunze", 1);
+        Node hof = new Node("Hof", 1);
+        Node lustig = new Node("Lustig", 1);
 
-        Node strassenbau = new Node("Strassenbau");
-        Node verkehrsplanung = new Node("Verkehrsplanung");
-        Node archaeologie = new Node("Archaeologie");
-        Node modeberatung = new Node("Modeberatung");
-        Node hochzeitsplanung = new Node("Hochzeitsplanung");
-        Node wasserversorgung = new Node("Wasserversorgung");
-        Node wettkampfausrichtung = new Node("Wettkampfausrichtung");
+        Node strassenbau = new Node("Strassenbau", 2);
+        Node verkehrsplanung = new Node("Verkehrsplanung", 2);
+        Node archaeologie = new Node("Archaeologie", 2);
+        Node modeberatung = new Node("Modeberatung", 2);
+        Node hochzeitsplanung = new Node("Hochzeitsplanung", 2);
+        Node wasserversorgung = new Node("Wasserversorgung", 2);
+        Node wettkampfausrichtung = new Node("Wettkampfausrichtung", 2);
 
         Edge smaier = new Edge(1);
         s.addEdge(maier, smaier);

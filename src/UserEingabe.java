@@ -53,6 +53,7 @@ public class UserEingabe {
                 break;
             case 3:
                 System.out.println("Feuerwerk");
+                //dijkstra
                 break;
             case 4:
                 System.out.println("Hochzeitspaare");
@@ -74,40 +75,46 @@ public class UserEingabe {
     }
 
     /**
-     * Programm für die Loesung des Wasserversorgung Problems.
+     * Programm fuer die Loesung des Wasserversorgung Problems.
      */
     private static void wasserVersorgung() {
         List<Node> graph = null;
 
         int wahl = decide();
+        Node startNode = null;
+        Node endNode = null;
 
         switch (wahl) {
             case 1:
                 graph = createGraphMaxFlow();
+                System.out.println("Geben sie den Startknoten an: ");
+                startNode = knotenEingabeMaxFlow(graph);
+                System.out.println("Geben sie den Endknoten an: ");
+                endNode = knotenEingabeMaxFlow(graph);
+
+                System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
             case 2:
                 graph = Problem2.createProblemGraph();
+                startNode = getNodeWithLabelMaxFlow("w", graph);
+                endNode = getNodeWithLabelMaxFlow("s", graph);
         }
-        System.out.println("Geben sie den Startknoten an: ");
-        Node startNode = knotenEingabe(graph);
-        System.out.println("Geben sie den Endknoten an: ");
-        Node endNode = knotenEingabe(graph);
 
-        System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
 
 
         MaxF maxF = new MaxF(graph);
         System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        int maxFlow = maxF.run(graph.get(0), graph.get(graph.size() - 1));
-        System.out.println(maxF.graphToString());
+        int maxFlow = maxF.run(startNode, endNode);
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
+        //maxF.resetPrintHistory();
+        System.out.println(maxF.residualGraphToString());
     }
 
     /**
-     * Programm für die Loesung des Kompetenz Problems.
+     * Programm fuer die Loesung des Kompetenz Problems.
      */
     private static void kompetenzErmittlung() {
         List<Node> graph = null;
@@ -130,9 +137,12 @@ public class UserEingabe {
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToStringMatching());
+        System.out.println(maxF.residualGraphToStringMatchingKompetenz());
     }
 
+    /**
+     * Programm fuer die Loesung des Hochzeitspaar Problems.
+     */
     private static void hochzeitspaare() {
         List<Node> graph = null;
 
@@ -158,7 +168,7 @@ public class UserEingabe {
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToStringMatching());
+        System.out.println(maxF.residualGraphToStringMatchingPaare());
     }
 
     /**
@@ -169,23 +179,36 @@ public class UserEingabe {
         List<Node> graph = null;
 
         int wahl = decide();
+        Node startNode = null;
+        Node endNode = null;
 
         switch (wahl) {
             case 1:
                 graph = createGraphMaxFlow();
+                System.out.println("Geben sie den Startknoten an: ");
+                startNode = knotenEingabeMaxFlow(graph);
+                System.out.println("Geben sie den Endknoten an: ");
+                endNode = knotenEingabeMaxFlow(graph);
+
+                System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
             case 2:
                 graph = Problem6.createProblemGraph();
+                startNode = getNodeWithLabelMaxFlow("s", graph);
+                endNode = getNodeWithLabelMaxFlow("t", graph);
         }
+
+
 
         MaxF maxF = new MaxF(graph);
         System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph), getNodeWithLabelMaxFlow("t", graph));
-        System.out.println(maxF.graphToString());
+        int maxFlow = maxF.run(startNode, endNode);
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
+        maxF.resetPrintHistory();
+        System.out.println(maxF.residualGraphToStringParking());
     }
 
     /**
@@ -264,44 +287,33 @@ public class UserEingabe {
             correctInputEdges = false;
         }
 
-        String startNode;
+
         PrimAlgorithmus.Node Start = null;
-        String endNode;
+
         PrimAlgorithmus.Node End = null;
 
-        int cap;
+        int weight;
 
         for (int i = 0; i < anzahlEdges; i++) {
-            System.out.println((i + 1) + "te Edge");
-            System.out.println("Startknoten:");
-            startNode = scanner.next();
-            System.out.println("Endknoten:");
-            endNode = scanner.next();
-            System.out.println("Kapazität: ");
-            cap = scanner.nextInt();
+            while (true) {
+                System.out.println((i + 1) + "te Edge");
+                System.out.println("Startknoten:");
+                Start = knotenEingabePrim(graph);
+                System.out.println("Endknoten:");
+                End = knotenEingabePrim(graph);
 
-            for (PrimAlgorithmus.Node node : graph) {
-                if (node.getLabel().equals(startNode)) {
-                    Start = node;
+                if (Start == End) {
+                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    continue;
+                } else {
+                    System.out.println("Gewicht: ");
+                    weight = scanner.nextInt();
+                    break;
                 }
-                if (node.getLabel().equals(endNode)) {
-                    End = node;
-                }
             }
-
-            if (Start == null) {
-                throw new RuntimeException("Start nicht gefunden");
-            }
-
-            if (End == null) {
-                throw new RuntimeException("EndKnoten nicht gefunden");
-            }
-
-            Start.addEdge(End, new PrimAlgorithmus.Edge(cap));
+            Start.addEdge(End, new PrimAlgorithmus.Edge(weight));
         }
-
         return graph;
-
     }
 
     /**
@@ -364,9 +376,9 @@ public class UserEingabe {
             while (true) {
                 System.out.println((i + 1) + "te Edge");
                 System.out.println("Startknoten:");
-                Start = knotenEingabe(graph);
+                Start = knotenEingabeMaxFlow(graph);
                 System.out.println("Endknoten:");
-                End = knotenEingabe(graph);
+                End = knotenEingabeMaxFlow(graph);
 
                 if (Start == End) {
                     System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
@@ -387,6 +399,10 @@ public class UserEingabe {
 
     }
 
+    /**
+     * Generiert den Graphen fuer einen MaxFlow Matching Algorithmus
+     * @return Graphen des MaxFlow Matching Algo
+     */
     public static List<Node> createGraphMaxFlowMatching() {
 
         List<Node> graph = new ArrayList<>();
@@ -411,8 +427,8 @@ public class UserEingabe {
 
         //s und t initialisieren
 
-        Node s = new Node("w");
-        Node t = new Node("w");
+        Node s = new Node("s");
+        Node t = new Node("t");
         graph.add(s);
         graph.add(t);
 
@@ -486,9 +502,9 @@ public class UserEingabe {
             while (true) {
                 System.out.println((i + 1) + "te Edge");
                 System.out.println("Startknoten:");
-                Start = knotenEingabe(graph);
+                Start = knotenEingabeMaxFlow(graph);
                 System.out.println("Endknoten:");
-                End = knotenEingabe(graph);
+                End = knotenEingabeMaxFlow(graph);
 
                 if (Start == End) {
                     System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
@@ -499,14 +515,9 @@ public class UserEingabe {
                     break;
                 }
             }
-
-
-
             Start.addEdge(End, new Edge(cap));
         }
-
         return graph;
-
     }
 
     /**
@@ -542,17 +553,15 @@ public class UserEingabe {
 
     /**
      * Findet den Knoten mit dem passenden Label.
-     * @param name Name des Knoten
+     * @param name Name des gesuchten Knoten
      * @param graph Graph in dem der Knoten gesucht wird
      * @return Knoten mit dem passenden Namen
      */
     public static Node getNodeWithLabelMaxFlow(String name, List<Node> graph) {
 
-        Node tmpNode = null;
-
         for (Node node : graph) {
             if (node.getLabel().equals(name)) {
-                tmpNode = node;
+                Node tmpNode = node;
                 return tmpNode;
             }
         }
@@ -560,10 +569,15 @@ public class UserEingabe {
 //        if (tmpNode == null) {
 //            throw new RuntimeException("Knoten " + name +" nicht im Graphen gefunden");
 //        }
-        return tmpNode;
+        return null;
     }
 
-    private static Node knotenEingabe(List<Node> graph) {
+    /**
+     * String Eingabe wird in den passenden Knoten im Graphen umgewandelt (MaxFlow)
+     * @param graph Graphen in dem der Knoten gespeichert ist.
+     * @return Knoten dessen Name eingegeben wurde.
+     */
+    public static Node knotenEingabeMaxFlow(List<Node> graph) {
         Scanner scanner = new Scanner(System.in);
 
         String nodeLabel = null;
@@ -584,6 +598,52 @@ public class UserEingabe {
             correctInput = false;
         }
         return getNodeWithLabelMaxFlow(nodeLabel, graph);
+    }
+
+
+    /**
+     * Findet den Knoten mit dem passenden Label
+     * @param name Name des gesuchten Knotens
+     * @param graph Grap in dem der Knoten gesucht wird
+     * @return Knoten mit dem passenden Namen
+     */
+    public static PrimAlgorithmus.Node getNodeWithLabelPrim(String name, List<PrimAlgorithmus.Node> graph) {
+
+        for (PrimAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                PrimAlgorithmus.Node tmpNode = node;
+                return tmpNode;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * String Eingabe wird in den passenden Knoten im Graphen umgewandelt (Prim)
+     * @param graph Graphen in dem der Knoten gespeichert ist.
+     * @return Knoten dessen Name eingegeben wurde.
+     */
+    public static PrimAlgorithmus.Node knotenEingabePrim(List<PrimAlgorithmus.Node> graph) {
+        Scanner scanner = new Scanner(System.in);
+
+        String nodeLabel = null;
+
+        boolean correctInput = true;
+        while(correctInput) {
+            if (scanner.hasNextLine()) {
+                nodeLabel = scanner.nextLine();
+                if (getNodeWithLabelPrim(nodeLabel, graph) == null) {
+                    System.out.println("Bitte geben Sie einen Knoten aus dem Graphen an. ");
+                    continue;
+                }
+            } else {
+                System.out.println("Bitte geben Sie einen String ein.");
+                scanner.next();
+                continue;
+            }
+            correctInput = false;
+        }
+        return getNodeWithLabelPrim(nodeLabel, graph);
     }
 }
 
