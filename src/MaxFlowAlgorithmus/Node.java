@@ -1,18 +1,25 @@
-package FordFulkersonAlgorithmus;
+package MaxFlowAlgorithmus;
 
 import java.util.*;
 
 public class Node {
 
-    private String label = null;
+        private String label = null;
+        private int group = 0;
     /**
      * Hashmap "edges" speichert den Zielknoten als Key und die Kante als Value
      */
     private Map<Node, Edge> edges = new HashMap<>();
     private Map<Node, Edge> residualEdges;
 
+
     public Node(String label) {
         this.label = label;
+    }
+
+    public Node(String label, int group) {
+        this.label = label;
+        this.group = group;
     }
 
     public String getLabel() {
@@ -21,6 +28,14 @@ public class Node {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public int getGroup() {
+        return group;
+    }
+
+    public void setGroup(int group) {
+        this.group = group;
     }
 
     public Map<Node, Edge> getEdges() {
@@ -240,6 +255,32 @@ public class Node {
         return sb.toString();
     }
 
+    public String residualToStringMatching() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
+            if (pair.getValue().isResidual()) {
+                if (!pair.getValue().isPrinted()) {
+                    if (!getLabel().equals("s") && !getLabel().equals("t")) {
+                        if (!pair.getKey().getLabel().equals("s") && !pair.getKey().getLabel().equals("t")) {
+                            sb.append(getLabel());
+                            sb.append(" --- ");
+                            sb.append(pair.getValue().getCapacity());
+                            sb.append("/");
+                            sb.append(pair.getValue().getFlow());
+                            sb.append(" --> ");
+                            sb.append(pair.getKey().getLabel());
+                            sb.append("\n");
+                            pair.getValue().setPrinted(true);
+                        }
+                    }
+
+                }
+            }
+
+        }
+        return sb.toString();
+    }
+
     /**
      * Ueberprueft den Inhalt in residualEdges
      * @return true, wenn die Hashmap Inhalt hat <p>false, wenn keine Rueckflusskanten vorhanden sind</p>
@@ -250,5 +291,19 @@ public class Node {
         } else {
             return true;
         }
+    }
+
+    public void searchEdgeReturn() {
+       for (Node node : edges.keySet()) {
+            if (node.getEdges().containsKey(this)) {
+                node.edges.remove(this);
+            } else {
+                this.edges.get(node).setNotNeeded(true);
+            }
+        }
+    }
+
+    public void removeNotNeeded() {
+        edges.entrySet().removeIf(entry -> entry.getValue().isNotNeeded());
     }
 }

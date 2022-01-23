@@ -1,4 +1,4 @@
-package FordFulkersonAlgorithmus;
+package MaxFlowAlgorithmus;
 
 public class Edge {
 
@@ -9,6 +9,7 @@ public class Edge {
     private boolean isPrinted = false;
     private boolean isFull = false;
     private boolean isResidual = false;
+    private boolean notNeeded = false;
 
     /**
      * Konstruktor fuer eine Edge beim ersten Erstellen
@@ -65,6 +66,14 @@ public class Edge {
 
     public void setResidual(boolean residual) {
         isResidual = residual;
+    }
+
+    public boolean isNotNeeded() {
+        return notNeeded;
+    }
+
+    public void setNotNeeded(boolean notNeeded) {
+        this.notNeeded = notNeeded;
     }
 
     /**

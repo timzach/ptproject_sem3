@@ -1,7 +1,6 @@
 package Probleme;
 
-import FordFulkersonAlgorithmus.Edge;
-import FordFulkersonAlgorithmus.Node;
+import MaxFlowAlgorithmus.*;
 
 import java.util.ArrayList;
 import java.util.List;

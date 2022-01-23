@@ -1,5 +1,6 @@
-import FordFulkersonAlgorithmus.*;
-import FordFulkersonAlgorithmus.Node;
+import MaxFlowAlgorithmus.Edge;
+import MaxFlowAlgorithmus.MaxF;
+import MaxFlowAlgorithmus.Node;
 import PrimAlgorithmus.*;
 import Probleme.*;
 
@@ -82,17 +83,17 @@ public class UserEingabe {
 
         switch (wahl) {
             case 1:
-                graph = createGraphFF();
+                graph = createGraphMaxFlow();
             case 2:
                 graph = Problem2.createProblemGraph();
         }
 
-        FordF fordF = new FordF(graph);
-        System.out.println(fordF.graphToString());
+        MaxF maxF = new MaxF(graph);
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
-        fordF.resetPrintHistory();
-        int maxFlow = fordF.run(graph.get(0), graph.get(graph.size() - 1));
-        System.out.println(fordF.graphToString());
+        maxF.resetPrintHistory();
+        int maxFlow = maxF.run(graph.get(0), graph.get(graph.size() - 1));
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
@@ -108,17 +109,17 @@ public class UserEingabe {
 
         switch (wahl) {
             case 1:
-                graph = createGraphFF();
+                graph = createGraphMaxFlow();
             case 2:
                 graph = Problem7.createProblemGraph();
         }
 
-        FordF fordF = new FordF(graph);
-        System.out.println(fordF.graphToString());
+        MaxF maxF = new MaxF(graph);
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
-        fordF.resetPrintHistory();
-        int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
-        System.out.println(fordF.graphToString());
+        maxF.resetPrintHistory();
+        int maxFlow = maxF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
@@ -128,7 +129,7 @@ public class UserEingabe {
      * Generiert den Graphen fuer einen MaxFlow Algorithmus
      * @return Graphen des MaxFlow Algo
      */
-    public static List<FordFulkersonAlgorithmus.Node> createGraphFF() {
+    public static List<Node> createGraphMaxFlow() {
 
         List<Node> graph = new ArrayList<>();
 
@@ -197,7 +198,7 @@ public class UserEingabe {
             cap = scanner.nextInt();
 
 
-            Start.addEdge(End, new FordFulkersonAlgorithmus.Edge(cap));
+            Start.addEdge(End, new Edge(cap));
         }
 
         return graph;
@@ -215,17 +216,17 @@ public class UserEingabe {
 
         switch (wahl) {
             case 1:
-                graph = createGraphFF();
+                graph = createGraphMaxFlow();
             case 2:
                 graph = Problem6.createProblemGraph();
         }
 
-        FordF fordF = new FordF(graph);
-        System.out.println(fordF.graphToString());
+        MaxF maxF = new MaxF(graph);
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
-        fordF.resetPrintHistory();
-        int maxFlow = fordF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
-        System.out.println(fordF.graphToString());
+        maxF.resetPrintHistory();
+        int maxFlow = maxF.run(getNodeWithLabelFF("s", graph), getNodeWithLabelFF("t", graph));
+        System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
@@ -384,11 +385,11 @@ public class UserEingabe {
      * @param graph Graph in dem der Knoten gesucht wird
      * @return Knoten mit dem passenden Namen
      */
-    public static FordFulkersonAlgorithmus.Node getNodeWithLabelFF(String name, List<FordFulkersonAlgorithmus.Node> graph) {
+    public static Node getNodeWithLabelFF(String name, List<Node> graph) {
 
-        FordFulkersonAlgorithmus.Node tmpNode = null;
+        Node tmpNode = null;
 
-        for (FordFulkersonAlgorithmus.Node node : graph) {
+        for (Node node : graph) {
             if (node.getLabel().equals(name)) {
                 tmpNode = node;
                 return tmpNode;
