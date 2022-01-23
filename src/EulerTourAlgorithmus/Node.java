@@ -26,16 +26,14 @@ public class Node {
 
     public void addEdge(Node node, Edge edge) {
         if (this.edges.containsKey(node)) {
-            if (edge.getWeight() < this.edges.get(node).getWeight()) {
-                this.edges.replace(node, edge);
-            }
+            this.edges.replace(node, edge);
         } else {
             this.edges.put(node, edge);
         }
     }
 
     public String toString() {
-        return getLabel();
+        return label;
     }
 
 }
