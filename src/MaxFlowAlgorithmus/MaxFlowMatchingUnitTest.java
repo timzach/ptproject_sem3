@@ -1,15 +1,33 @@
-package Probleme;
+package MaxFlowAlgorithmus;
 
-import MaxFlowAlgorithmus.*;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Klasse fuer das Hochzeitspaar-Problem
- */
-public class Problem4 {
-    public static List<Node> createProblemGraph() {
+public class MaxFlowMatchingUnitTest {
+    @Test
+    public void giveGraph(){
+        List<Node> graph = createGraph();
+//        testForest(graphen,"s","t");
+        MaxF maxF = new MaxF(graph);
+        System.out.println(maxF.graphToString());
+        System.out.println("-------------------");
+        maxF.resetPrintHistory();
+        maxF.checkMatching();
+        System.out.println(maxF.graphToString());
+        System.out.println("-------------------");
+        maxF.resetPrintHistory();
+        int maxFlow = maxF.run(graph.get(0),graph.get(graph.size()-1));
+        System.out.println("-------------------");
+        System.out.println("Maximaler Fluss: " + maxFlow);
+        System.out.println("-------------------");
+        maxF.resetPrintHistory();
+        System.out.println(maxF.residualGraphToStringMatching());
+
+    }
+
+    private List<Node> createGraph() {
         List<Node> graph = new ArrayList<>();
 
         Node s = new Node("s");
@@ -155,5 +173,4 @@ public class Problem4 {
 
         return graph;
     }
-
 }

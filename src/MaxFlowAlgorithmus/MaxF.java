@@ -1,12 +1,12 @@
-package FordFulkersonAlgorithmus;
+package MaxFlowAlgorithmus;
 
 import java.util.*;
 
-public class FordF {
+public class MaxF {
 
-    private List<Node> graph;
+        private List<Node> graph;
 
-    public FordF(List<Node> graph) {
+    public MaxF(List<Node> graph) {
         this.graph = graph;
     }
 
@@ -26,7 +26,7 @@ public class FordF {
         while (true) {
 
 
-            System.out.println("-------------------");
+//            System.out.println("-------------------");
             resetPrintHistory();
             //Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
             Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
@@ -122,5 +122,30 @@ public class FordF {
         for (Node node : graph) {
             node.createResidualEdges();
         }
+    }
+
+    /**
+     * Ueberprueft alle Knoten der Gruppe 1 ob es eine Kante hin und zurueck gibt.
+     */
+    public void checkMatching() {
+        for (Node node : graph) {
+            if (node.getGroup() == 1) {
+                node.searchEdgeReturn();
+            }
+        }
+        for (Node node : graph) {
+            node.removeNotNeeded();
+        }
+    }
+
+    /**
+     * @return String des Rueckflussgraphen ohne die Knoten s & t.
+     */
+    public String residualGraphToStringMatching() {
+        StringBuilder sb = new StringBuilder();
+        for (Node node : graph) {
+            sb.append(node.residualToStringMatching());
+        }
+        return sb.toString();
     }
 }
