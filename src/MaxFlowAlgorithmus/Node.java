@@ -255,6 +255,10 @@ public class Node {
         return sb.toString();
     }
 
+    /**
+     * Generiert die Ausgabe fuer den Graphen mit Rueckflusskanten ohne die Knoten s&t.
+     * @return String der Ausgabe
+     */
     public String residualToStringMatching() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
@@ -293,6 +297,10 @@ public class Node {
         }
     }
 
+    /**
+     * Checkt ob es eine Kante zurück zum Ausgangsknoten gibt, löscht die Kante zurück zum Ausgangsknoten.
+     * Wenn der Knoten aus der anderen Gruppe kein Edge zurück zum Ausgangsknoten hat setzt es notNeeded auf true.
+     */
     public void searchEdgeReturn() {
        for (Node node : edges.keySet()) {
             if (node.getEdges().containsKey(this)) {
@@ -303,6 +311,9 @@ public class Node {
         }
     }
 
+    /**
+     * Entfernt alle Kanten die nicht gebraucht werden.
+     */
     public void removeNotNeeded() {
         edges.entrySet().removeIf(entry -> entry.getValue().isNotNeeded());
     }

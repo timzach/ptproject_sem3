@@ -124,6 +124,9 @@ public class MaxF {
         }
     }
 
+    /**
+     * Ueberprueft alle Knoten der Gruppe 1 ob es eine Kante hin und zurueck gibt.
+     */
     public void checkMatching() {
         for (Node node : graph) {
             if (node.getGroup() == 1) {
@@ -134,7 +137,10 @@ public class MaxF {
             node.removeNotNeeded();
         }
     }
-    //TODO: JavaDoc
+
+    /**
+     * @return String des Rueckflussgraphen ohne die Knoten s & t.
+     */
     public String residualGraphToStringMatching() {
         StringBuilder sb = new StringBuilder();
         for (Node node : graph) {

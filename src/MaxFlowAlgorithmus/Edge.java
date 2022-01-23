@@ -9,6 +9,9 @@ public class Edge {
     private boolean isPrinted = false;
     private boolean isFull = false;
     private boolean isResidual = false;
+    /**
+     * Wird für das Bearbeiten des Graphens beim Matching genutzt.
+     */
     private boolean notNeeded = false;
 
     /**
@@ -17,7 +20,6 @@ public class Edge {
      */
     public Edge(int capacity) {
         this.capacity = capacity;
-        //this.flow = flow;
     }
 
     /**

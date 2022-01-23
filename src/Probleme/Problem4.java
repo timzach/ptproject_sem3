@@ -9,22 +9,22 @@ import java.util.List;
  * Klasse fuer das Hochzeitspaar-Problem
  */
 public class Problem4 {
-    public List<Node> createProblemGraph() {
+    public static List<Node> createProblemGraph() {
         List<Node> graph = new ArrayList<>();
 
         Node s = new Node("s");
-        Node marie = new Node("Marie");
-        Node susanne = new Node("Susanne");
-        Node antonia = new Node("Antonia");
-        Node lena = new Node("Lena");
-        Node ida = new Node("Ida");
-        Node anna = new Node("Anna");
-        Node peter = new Node("Peter");
-        Node jonas = new Node("Jonas");
-        Node felix = new Node("Felix");
-        Node mats = new Node("Mats");
-        Node aaron = new Node("Aaron");
-        Node tom = new Node("Tom");
+        Node marie = new Node("Marie", 1);
+        Node susanne = new Node("Susanne",1);
+        Node antonia = new Node("Antonia",1);
+        Node lena = new Node("Lena",1);
+        Node ida = new Node("Ida",1);
+        Node anna = new Node("Anna",1);
+        Node peter = new Node("Peter",2);
+        Node jonas = new Node("Jonas",2);
+        Node felix = new Node("Felix",2);
+        Node mats = new Node("Mats",2);
+        Node aaron = new Node("Aaron",2);
+        Node tom = new Node("Tom",2);
         Node t = new Node("t");
 
         Edge sMarie = new Edge(1);
@@ -122,6 +122,9 @@ public class Problem4 {
 
         Edge matsMarie = new Edge(1);
         mats.addEdge(marie, matsMarie);
+
+        Edge matsLena = new Edge(1);
+        mats.addEdge(lena, matsLena);
 
         Edge aaronAntonia = new Edge(1);
         aaron.addEdge(antonia, aaronAntonia);
