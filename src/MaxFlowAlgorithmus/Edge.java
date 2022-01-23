@@ -3,7 +3,6 @@ package MaxFlowAlgorithmus;
 public class Edge {
 
     private int capacity;
-    private int flow = 0;
 
 
     private boolean isPrinted = false;
@@ -36,14 +35,6 @@ public class Edge {
 
     public int getCapacity() {
         return capacity;
-    }
-
-    public int getFlow() {
-        return flow;
-    }
-
-    public void setFlow(int flow) {
-        this.flow = flow;
     }
 
     public boolean isFull() {
