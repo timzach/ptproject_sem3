@@ -1,9 +1,10 @@
+import DijkstraAlgorithmus.Dijkstra;
+import EulerTourAlgorithmus.EulerTour;
 import MaxFlowAlgorithmus.Edge;
 import MaxFlowAlgorithmus.MaxF;
 import MaxFlowAlgorithmus.Node;
-import PrimAlgorithmus.*;
+import PrimAlgorithmus.Prim;
 import Probleme.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +29,7 @@ public class UserEingabe {
         System.out.print("Geben sie die Nummer Ihres gewünschten Problems ein:");
 
         boolean correctInput = true;
-        while(correctInput) {
+        while (correctInput) {
             if (scanner.hasNextInt()) {
                 ProblemID = scanner.nextInt();
             } else {
@@ -53,7 +54,7 @@ public class UserEingabe {
                 break;
             case 3:
                 System.out.println("Feuerwerk");
-                //dijkstra
+                feuerwerk();
                 break;
             case 4:
                 System.out.println("Hochzeitspaare");
@@ -61,7 +62,7 @@ public class UserEingabe {
                 break;
             case 5:
                 System.out.println("Einladungen");
-                //euler
+                einladungen();
                 break;
             case 6:
                 System.out.println("StrassenVerteilung");
@@ -71,6 +72,66 @@ public class UserEingabe {
                 System.out.println("Kompetenz");
                 kompetenzErmittlung();
                 break;
+        }
+    }
+
+    private static void einladungen() {
+        List<EulerTourAlgorithmus.Node> graph = null;
+
+        int wahl = decide();
+
+        switch (wahl) {
+            case 1:
+                graph = createGraphEulerTour();
+                break;
+            case 2:
+                graph = Problem5.createProblemGraph();
+                break;
+        }
+
+         EulerTour euler = new EulerTour(graph);
+        euler.run(graph.get(0));
+        List<EulerTourAlgorithmus.Node> tour = euler.getTour();
+        System.out.print("Weg");
+        for (EulerTourAlgorithmus.Node entries : tour) {
+            System.out.print(" -> " + entries);
+        }
+        System.out.println();
+    }
+
+
+
+    /**
+     * Programm fuer die Loesung des Feuerwerk Problems.
+     */
+    private static void feuerwerk() {
+        List<DijkstraAlgorithmus.Node> graph = null;
+
+        int wahl = decide();
+        DijkstraAlgorithmus.Node startNode = null;
+
+        switch (wahl) {
+            case 1:
+                graph = createGraphDijkstra();
+                System.out.println("Geben Sie den Startknoten an: ");
+                startNode = knotenEingabeDijkstra(graph);
+                System.out.println("Start: " + startNode.getLabel());
+                break;
+            case 2:
+                graph = Problem3.createProblemGraph();
+                startNode = getNodeWithLabelDijkstra("Streichholz", graph);
+                System.out.println("Start: " + startNode.getLabel());
+                break;
+
+        }
+
+        Dijkstra dijkstra = new Dijkstra(graph);
+        dijkstra.run(graph.get(0));
+        int i = 1;
+        System.out.println("Reihenfolge des Feuerwerks:");
+        for (Object entries : dijkstra.getDistance()) {
+            System.out.println(i + ". " + entries);
+            i++;
         }
     }
 
@@ -87,18 +148,20 @@ public class UserEingabe {
         switch (wahl) {
             case 1:
                 graph = createGraphMaxFlow();
-                System.out.println("Geben sie den Startknoten an: ");
+                System.out.println("Geben Sie den Startknoten an: ");
                 startNode = knotenEingabeMaxFlow(graph);
-                System.out.println("Geben sie den Endknoten an: ");
+                System.out.println("Geben Sie den Endknoten an: ");
                 endNode = knotenEingabeMaxFlow(graph);
-
                 System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
+                break;
+
             case 2:
                 graph = Problem2.createProblemGraph();
                 startNode = getNodeWithLabelMaxFlow("w", graph);
                 endNode = getNodeWithLabelMaxFlow("s", graph);
+                System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
+                break;
         }
-
 
 
         MaxF maxF = new MaxF(graph);
@@ -124,15 +187,17 @@ public class UserEingabe {
         switch (wahl) {
             case 1:
                 graph = createGraphMaxFlowMatching();
+                break;
             case 2:
                 graph = Problem7.createProblemGraph();
+                break;
         }
 
         MaxF maxF = new MaxF(graph);
         System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph),getNodeWithLabelMaxFlow("t", graph));
+        int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph), getNodeWithLabelMaxFlow("t", graph));
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
@@ -151,8 +216,10 @@ public class UserEingabe {
         switch (wahl) {
             case 1:
                 graph = createGraphMaxFlowMatching();
+                break;
             case 2:
                 graph = Problem4.createProblemGraph();
+                break;
         }
 
         MaxF maxF = new MaxF(graph);
@@ -163,7 +230,7 @@ public class UserEingabe {
         System.out.println(maxF.graphToString());
         System.out.println("-------------------");
         maxF.resetPrintHistory();
-        int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph),getNodeWithLabelMaxFlow("t", graph));
+        int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph), getNodeWithLabelMaxFlow("t", graph));
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
@@ -189,14 +256,14 @@ public class UserEingabe {
                 startNode = knotenEingabeMaxFlow(graph);
                 System.out.println("Geben sie den Endknoten an: ");
                 endNode = knotenEingabeMaxFlow(graph);
-
                 System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
+                break;
             case 2:
                 graph = Problem6.createProblemGraph();
                 startNode = getNodeWithLabelMaxFlow("s", graph);
                 endNode = getNodeWithLabelMaxFlow("t", graph);
+                break;
         }
-
 
 
         MaxF maxF = new MaxF(graph);
@@ -223,8 +290,10 @@ public class UserEingabe {
         switch (wahl) {
             case 1:
                 graph = createGraphPrim();
+                break;
             case 2:
                 graph = Problem1.createProblemGraph();
+                break;
         }
 
         Prim prim = new Prim(graph);
@@ -239,6 +308,7 @@ public class UserEingabe {
 
     /**
      * Generiert den Graphen fuer einen Prim Algorithmus
+     *
      * @return Graphen des Prim Algo
      */
     private static List<PrimAlgorithmus.Node> createGraphPrim() {
@@ -251,7 +321,7 @@ public class UserEingabe {
         System.out.println("Anzahl Nodes: ");
 
         boolean correctInputNodes = true;
-        while(correctInputNodes) {
+        while (correctInputNodes) {
             if (scanner.hasNextInt()) {
                 anzahlNodes = scanner.nextInt();
             } else {
@@ -261,7 +331,6 @@ public class UserEingabe {
             }
             correctInputNodes = false;
         }
-
 
 
         for (int i = 0; i < anzahlNodes; i++) {
@@ -276,7 +345,7 @@ public class UserEingabe {
         System.out.println("Anzahl Edges: ");
 
         boolean correctInputEdges = true;
-        while(correctInputEdges) {
+        while (correctInputEdges) {
             if (scanner.hasNextInt()) {
                 anzahlEdges = scanner.nextInt();
             } else {
@@ -318,6 +387,7 @@ public class UserEingabe {
 
     /**
      * Generiert den Graphen fuer einen MaxFlow Algorithmus
+     *
      * @return Graphen des MaxFlow Algo
      */
     public static List<Node> createGraphMaxFlow() {
@@ -331,7 +401,7 @@ public class UserEingabe {
         System.out.println("Anzahl Nodes: ");
 
         boolean correctInputNodes = true;
-        while(correctInputNodes) {
+        while (correctInputNodes) {
             if (scanner.hasNextInt()) {
                 anzahlNodes = scanner.nextInt();
             } else {
@@ -357,7 +427,7 @@ public class UserEingabe {
         System.out.println("Anzahl Edges: ");
 
         boolean correctInputEdges = true;
-        while(correctInputEdges) {
+        while (correctInputEdges) {
             if (scanner.hasNextInt()) {
                 anzahlEdges = scanner.nextInt();
             } else {
@@ -391,7 +461,6 @@ public class UserEingabe {
             }
 
 
-
             Start.addEdge(End, new Edge(cap));
         }
 
@@ -401,6 +470,7 @@ public class UserEingabe {
 
     /**
      * Generiert den Graphen fuer einen MaxFlow Matching Algorithmus
+     *
      * @return Graphen des MaxFlow Matching Algo
      */
     public static List<Node> createGraphMaxFlowMatching() {
@@ -414,7 +484,7 @@ public class UserEingabe {
         System.out.println("Anzahl Nodes in der ersten Gruppe: ");
 
         boolean correctInputNodes = true;
-        while(correctInputNodes) {
+        while (correctInputNodes) {
             if (scanner.hasNextInt()) {
                 anzahlNodesErsteGruppe = scanner.nextInt();
             } else {
@@ -445,7 +515,7 @@ public class UserEingabe {
         System.out.println("Anzahl Nodes in der ersten Gruppe: ");
 
         boolean correctInputNodesTwo = true;
-        while(correctInputNodesTwo) {
+        while (correctInputNodesTwo) {
             if (scanner.hasNextInt()) {
                 anzahlNodesZweiteGruppe = scanner.nextInt();
             } else {
@@ -483,7 +553,7 @@ public class UserEingabe {
         System.out.println("Anzahl Edges zwischen den Paaren: ");
 
         boolean correctInputEdges = true;
-        while(correctInputEdges) {
+        while (correctInputEdges) {
             if (scanner.hasNextInt()) {
                 anzahlEdges = scanner.nextInt();
             } else {
@@ -520,8 +590,157 @@ public class UserEingabe {
         return graph;
     }
 
+    public static List<DijkstraAlgorithmus.Node> createGraphDijkstra() {
+        List<DijkstraAlgorithmus.Node> graph = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int anzahlNodes = 0;
+
+        System.out.println("Anzahl Nodes: ");
+
+        boolean correctInputNodes = true;
+        while (correctInputNodes) {
+            if (scanner.hasNextInt()) {
+                anzahlNodes = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Nodes ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputNodes = false;
+        }
+
+
+        for (int i = 0; i < anzahlNodes; i++) {
+            System.out.println("Name der " + (i + 1) + "ten Node: ");
+            String nodeLabel;
+            nodeLabel = scanner.next();
+            graph.add(new DijkstraAlgorithmus.Node(nodeLabel));
+        }
+
+        int anzahlEdges = 0;
+
+        System.out.println("Anzahl Edges: ");
+
+        boolean correctInputEdges = true;
+        while (correctInputEdges) {
+            if (scanner.hasNextInt()) {
+                anzahlEdges = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Edges ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputEdges = false;
+        }
+
+
+        DijkstraAlgorithmus.Node Start = null;
+
+        DijkstraAlgorithmus.Node End = null;
+
+        int weight;
+
+        for (int i = 0; i < anzahlEdges; i++) {
+            while (true) {
+                System.out.println((i + 1) + "te Edge");
+                System.out.println("Startknoten:");
+                Start = knotenEingabeDijkstra(graph);
+                System.out.println("Endknoten:");
+                End = knotenEingabeDijkstra(graph);
+
+                if (Start == End) {
+                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    continue;
+                } else {
+                    System.out.println("Gewicht: ");
+                    weight = scanner.nextInt();
+                    break;
+                }
+            }
+            Start.addEdge(End, new DijkstraAlgorithmus.Edge(weight));
+            End.addEdge(Start, new DijkstraAlgorithmus.Edge(weight));
+        }
+        return graph;
+    }
+
+    public static List<EulerTourAlgorithmus.Node> createGraphEulerTour() {
+        List<EulerTourAlgorithmus.Node> graph = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int anzahlNodes = 0;
+
+        System.out.println("Anzahl Nodes: ");
+
+        boolean correctInputNodes = true;
+        while (correctInputNodes) {
+            if (scanner.hasNextInt()) {
+                anzahlNodes = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Nodes ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputNodes = false;
+        }
+
+
+        for (int i = 0; i < anzahlNodes; i++) {
+            System.out.println("Name der " + (i + 1) + "ten Node: ");
+            String nodeLabel;
+            nodeLabel = scanner.next();
+            graph.add(new EulerTourAlgorithmus.Node(nodeLabel));
+        }
+
+        int anzahlEdges = 0;
+
+        System.out.println("Anzahl Edges: ");
+
+        boolean correctInputEdges = true;
+        while (correctInputEdges) {
+            if (scanner.hasNextInt()) {
+                anzahlEdges = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Edges ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputEdges = false;
+        }
+
+
+        EulerTourAlgorithmus.Node Start = null;
+
+        EulerTourAlgorithmus.Node End = null;
+
+        String label;
+
+        for (int i = 0; i < anzahlEdges; i++) {
+            while (true) {
+                System.out.println((i + 1) + "te Edge");
+                System.out.println("Startknoten:");
+                Start = knotenEingabeEulerTour(graph);
+                System.out.println("Endknoten:");
+                End = knotenEingabeEulerTour(graph);
+
+                if (Start == End) {
+                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    continue;
+                } else {
+                    label = Start.getLabel() + End.getLabel();
+                    break;
+                }
+            }
+            Start.addEdge(End, new EulerTourAlgorithmus.Edge(label));
+        }
+        return graph;
+    }
+
     /**
      * Beinhaltet die Wahl zwischen den 2 Graphtypen
+     *
      * @return Integer der Wahl
      */
     public static int decide() {
@@ -534,7 +753,7 @@ public class UserEingabe {
         System.out.println("Graph des Problems [2]");
 
         boolean correctInput = true;
-        while(correctInput) {
+        while (correctInput) {
             if (scanner.hasNextInt()) {
                 wahl = scanner.nextInt();
                 if (wahl < 1 || wahl > 2) {
@@ -553,7 +772,8 @@ public class UserEingabe {
 
     /**
      * Findet den Knoten mit dem passenden Label.
-     * @param name Name des gesuchten Knoten
+     *
+     * @param name  Name des gesuchten Knoten
      * @param graph Graph in dem der Knoten gesucht wird
      * @return Knoten mit dem passenden Namen
      */
@@ -574,6 +794,7 @@ public class UserEingabe {
 
     /**
      * String Eingabe wird in den passenden Knoten im Graphen umgewandelt (MaxFlow)
+     *
      * @param graph Graphen in dem der Knoten gespeichert ist.
      * @return Knoten dessen Name eingegeben wurde.
      */
@@ -583,7 +804,7 @@ public class UserEingabe {
         String nodeLabel = null;
 
         boolean correctInput = true;
-        while(correctInput) {
+        while (correctInput) {
             if (scanner.hasNextLine()) {
                 nodeLabel = scanner.nextLine();
                 if (getNodeWithLabelMaxFlow(nodeLabel, graph) == null) {
@@ -603,7 +824,8 @@ public class UserEingabe {
 
     /**
      * Findet den Knoten mit dem passenden Label
-     * @param name Name des gesuchten Knotens
+     *
+     * @param name  Name des gesuchten Knotens
      * @param graph Grap in dem der Knoten gesucht wird
      * @return Knoten mit dem passenden Namen
      */
@@ -620,6 +842,7 @@ public class UserEingabe {
 
     /**
      * String Eingabe wird in den passenden Knoten im Graphen umgewandelt (Prim)
+     *
      * @param graph Graphen in dem der Knoten gespeichert ist.
      * @return Knoten dessen Name eingegeben wurde.
      */
@@ -629,7 +852,7 @@ public class UserEingabe {
         String nodeLabel = null;
 
         boolean correctInput = true;
-        while(correctInput) {
+        while (correctInput) {
             if (scanner.hasNextLine()) {
                 nodeLabel = scanner.nextLine();
                 if (getNodeWithLabelPrim(nodeLabel, graph) == null) {
@@ -644,6 +867,72 @@ public class UserEingabe {
             correctInput = false;
         }
         return getNodeWithLabelPrim(nodeLabel, graph);
+    }
+
+    public static DijkstraAlgorithmus.Node knotenEingabeDijkstra(List<DijkstraAlgorithmus.Node> graph) {
+        Scanner scanner = new Scanner(System.in);
+
+        String nodeLabel = null;
+
+        boolean correctInput = true;
+        while (correctInput) {
+            if (scanner.hasNextLine()) {
+                nodeLabel = scanner.nextLine();
+                if (getNodeWithLabelDijkstra(nodeLabel, graph) == null) {
+                    System.out.println("Bitte geben Sie einen Knoten aus dem Graphen an. ");
+                    continue;
+                }
+            } else {
+                System.out.println("Bitte geben Sie einen String ein.");
+                scanner.next();
+                continue;
+            }
+            correctInput = false;
+        }
+        return getNodeWithLabelDijkstra(nodeLabel, graph);
+    }
+
+    public static DijkstraAlgorithmus.Node getNodeWithLabelDijkstra(String name, List<DijkstraAlgorithmus.Node> graph) {
+        for (DijkstraAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                DijkstraAlgorithmus.Node tmpNode = node;
+                return tmpNode;
+            }
+        }
+        return null;
+    }
+
+    public static EulerTourAlgorithmus.Node knotenEingabeEulerTour(List<EulerTourAlgorithmus.Node> graph) {
+        Scanner scanner = new Scanner(System.in);
+
+        String nodeLabel = null;
+
+        boolean correctInput = true;
+        while (correctInput) {
+            if (scanner.hasNextLine()) {
+                nodeLabel = scanner.nextLine();
+                if (getNodeWithLabelEulerTour(nodeLabel, graph) == null) {
+                    System.out.println("Bitte geben Sie einen Knoten aus dem Graphen an. ");
+                    continue;
+                }
+            } else {
+                System.out.println("Bitte geben Sie einen String ein.");
+                scanner.next();
+                continue;
+            }
+            correctInput = false;
+        }
+        return getNodeWithLabelEulerTour(nodeLabel, graph);
+    }
+
+    private static EulerTourAlgorithmus.Node getNodeWithLabelEulerTour(String name, List<EulerTourAlgorithmus.Node> graph) {
+        for (EulerTourAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                EulerTourAlgorithmus.Node tmpNode = node;
+                return tmpNode;
+            }
+        }
+        return null;
     }
 }
 

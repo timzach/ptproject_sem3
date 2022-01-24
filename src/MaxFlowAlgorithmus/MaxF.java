@@ -4,7 +4,7 @@ import java.util.*;
 
 public class MaxF {
 
-        private List<Node> graph;
+    private List<Node> graph;
 
     public MaxF(List<Node> graph) {
         this.graph = graph;
