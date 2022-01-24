@@ -728,6 +728,7 @@ public class UserEingabe {
                 }
             }
             Start.addEdge(End, new EulerTourAlgorithmus.Edge(label));
+            End.addEdge(Start, new EulerTourAlgorithmus.Edge(label));
         }
         return graph;
     }
