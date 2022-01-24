@@ -1,10 +1,10 @@
-import DijkstraAlgorithmus.*;
+import DijkstraAlgorithmus.Dijkstra;
+import EulerTourAlgorithmus.EulerTour;
 import MaxFlowAlgorithmus.Edge;
 import MaxFlowAlgorithmus.MaxF;
 import MaxFlowAlgorithmus.Node;
-import PrimAlgorithmus.*;
+import PrimAlgorithmus.Prim;
 import Probleme.*;
-
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +62,7 @@ public class UserEingabe {
                 break;
             case 5:
                 System.out.println("Einladungen");
-                //euler
+                einladungen();
                 break;
             case 6:
                 System.out.println("StrassenVerteilung");
@@ -74,6 +74,32 @@ public class UserEingabe {
                 break;
         }
     }
+
+    private static void einladungen() {
+        List<EulerTourAlgorithmus.Node> graph = null;
+
+        int wahl = decide();
+
+        switch (wahl) {
+            case 1:
+                graph = createGraphEulerTour();
+                break;
+            case 2:
+                graph = Problem5.createProblemGraph();
+                break;
+        }
+
+         EulerTour euler = new EulerTour(graph);
+        euler.run(graph.get(0));
+        List<EulerTourAlgorithmus.Node> tour = euler.getTour();
+        System.out.print("Weg");
+        for (EulerTourAlgorithmus.Node entries : tour) {
+            System.out.print(" -> " + entries);
+        }
+        System.out.println();
+    }
+
+
 
     /**
      * Programm fuer die Loesung des Feuerwerk Problems.
@@ -639,6 +665,79 @@ public class UserEingabe {
         return graph;
     }
 
+    public static List<EulerTourAlgorithmus.Node> createGraphEulerTour() {
+        List<EulerTourAlgorithmus.Node> graph = new ArrayList<>();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int anzahlNodes = 0;
+
+        System.out.println("Anzahl Nodes: ");
+
+        boolean correctInputNodes = true;
+        while (correctInputNodes) {
+            if (scanner.hasNextInt()) {
+                anzahlNodes = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Nodes ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputNodes = false;
+        }
+
+
+        for (int i = 0; i < anzahlNodes; i++) {
+            System.out.println("Name der " + (i + 1) + "ten Node: ");
+            String nodeLabel;
+            nodeLabel = scanner.next();
+            graph.add(new EulerTourAlgorithmus.Node(nodeLabel));
+        }
+
+        int anzahlEdges = 0;
+
+        System.out.println("Anzahl Edges: ");
+
+        boolean correctInputEdges = true;
+        while (correctInputEdges) {
+            if (scanner.hasNextInt()) {
+                anzahlEdges = scanner.nextInt();
+            } else {
+                System.out.println("Bitte geben Sie die Anzahl der Edges ein: ");
+                scanner.next();
+                continue;
+            }
+            correctInputEdges = false;
+        }
+
+
+        EulerTourAlgorithmus.Node Start = null;
+
+        EulerTourAlgorithmus.Node End = null;
+
+        String label;
+
+        for (int i = 0; i < anzahlEdges; i++) {
+            while (true) {
+                System.out.println((i + 1) + "te Edge");
+                System.out.println("Startknoten:");
+                Start = knotenEingabeEulerTour(graph);
+                System.out.println("Endknoten:");
+                End = knotenEingabeEulerTour(graph);
+
+                if (Start == End) {
+                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    continue;
+                } else {
+                    label = Start.getLabel() + End.getLabel();
+                    break;
+                }
+            }
+            Start.addEdge(End, new EulerTourAlgorithmus.Edge(label));
+        }
+        return graph;
+    }
+
     /**
      * Beinhaltet die Wahl zwischen den 2 Graphtypen
      *
@@ -797,6 +896,39 @@ public class UserEingabe {
         for (DijkstraAlgorithmus.Node node : graph) {
             if (node.getLabel().equals(name)) {
                 DijkstraAlgorithmus.Node tmpNode = node;
+                return tmpNode;
+            }
+        }
+        return null;
+    }
+
+    public static EulerTourAlgorithmus.Node knotenEingabeEulerTour(List<EulerTourAlgorithmus.Node> graph) {
+        Scanner scanner = new Scanner(System.in);
+
+        String nodeLabel = null;
+
+        boolean correctInput = true;
+        while (correctInput) {
+            if (scanner.hasNextLine()) {
+                nodeLabel = scanner.nextLine();
+                if (getNodeWithLabelEulerTour(nodeLabel, graph) == null) {
+                    System.out.println("Bitte geben Sie einen Knoten aus dem Graphen an. ");
+                    continue;
+                }
+            } else {
+                System.out.println("Bitte geben Sie einen String ein.");
+                scanner.next();
+                continue;
+            }
+            correctInput = false;
+        }
+        return getNodeWithLabelEulerTour(nodeLabel, graph);
+    }
+
+    private static EulerTourAlgorithmus.Node getNodeWithLabelEulerTour(String name, List<EulerTourAlgorithmus.Node> graph) {
+        for (EulerTourAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                EulerTourAlgorithmus.Node tmpNode = node;
                 return tmpNode;
             }
         }
