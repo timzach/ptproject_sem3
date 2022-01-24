@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Stream;
 
 public class Dijkstra {
 
@@ -24,10 +23,8 @@ public class Dijkstra {
             distance.put(node, Integer.MAX_VALUE);
             prevNode.put(node, null);
             unsettledNodes.add(node);
-            System.out.println("Added node " + node + " to unsettledNodes");
         }
         distance.put(source, 0);
-        System.out.println("---------------------");
 
         //Solange es unbesuchte Knoten gibt, wird die while-Schleife wiederholt.
         while(!unsettledNodes.isEmpty()) {
@@ -44,16 +41,11 @@ public class Dijkstra {
                 }
             }
         }
-        System.out.println("-----------------");
-        System.out.println("Kürzeste Distanzen: " + distance.toString());
-        System.out.println("-----------------");
     }
 
     public List<Node> getAdjacentNodes(Node node) {
         //Hier werden die adjazenten Knoten vom übergebenen Knoten zurückgegeben.
-        List<Node> adjacentNodes = new ArrayList<>(node.getEdges().keySet());
-        System.out.println("Nachbar Knoten von " + node + ": " + adjacentNodes);
-        return adjacentNodes;
+        return new ArrayList<>(node.getEdges().keySet());
     }
 
     public Node getMinimum(List<Node> unsettledNodes) {

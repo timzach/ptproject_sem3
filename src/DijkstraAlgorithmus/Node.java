@@ -5,9 +5,8 @@ import java.util.Map;
 
 public class Node {
 
-    private String label;
-    private Map<Node, Edge> edges = new HashMap<>(); //Hashmap in der Liste
-    private boolean isVisited = false;
+    private final String label;
+    private final Map<Node, Edge> edges = new HashMap<>(); //Hashmap in der Liste
 
     public Node(String label) {
         this.label = label;
@@ -15,10 +14,6 @@ public class Node {
 
     public String getLabel() {
         return label;
-    }
-
-    public void setLabel(String label) {
-        this.label = label;
     }
 
     public Map<Node, Edge> getEdges() {
@@ -35,16 +30,8 @@ public class Node {
         }
     }
 
-    public boolean isVisited() {
-        return isVisited;
-    }
-
-    public void setVisited(boolean visited) {
-        isVisited = visited;
-    }
-
     public String toString() {
-        return getLabel();
+        return label;
     }
 
 }
