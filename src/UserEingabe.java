@@ -18,15 +18,15 @@ public class UserEingabe {
 
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Welches Problem möchten Sie lösen?:");
+        System.out.println("Welches Problem moechten Sie loesen?:");
         System.out.println("Problem 1: Strassenbau");
         System.out.println("Problem 2: Wasserversorgung");
         System.out.println("Problem 3: Feuerwerk");
         System.out.println("Problem 4: Hochzeitspaare");
         System.out.println("Problem 5: Einladungen");
-        System.out.println("Problem 6: Verteilung auf die Straßen");
+        System.out.println("Problem 6: Verteilung auf die Strassen");
         System.out.println("Problem 7: Kompetenz");
-        System.out.print("Geben sie die Nummer Ihres gewünschten Problems ein:");
+        System.out.print("Geben sie die Nummer Ihres gewuenschten Problems ein:");
 
         boolean correctInput = true;
         while (correctInput) {
@@ -41,56 +41,66 @@ public class UserEingabe {
         }
 
 
-        System.out.println("Gewähltes Problem:" + ProblemID);
+        System.out.println("Gewaehltes Problem:" + ProblemID);
 
         switch (ProblemID) {
-            case 1:
+            case 1 -> {
                 System.out.println("Strassenbau");
                 strassenbau();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 System.out.println("Wasserversorgung");
                 wasserVersorgung();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 System.out.println("Feuerwerk");
                 feuerwerk();
-                break;
-            case 4:
+            }
+            case 4 -> {
                 System.out.println("Hochzeitspaare");
                 hochzeitspaare();
-                break;
-            case 5:
+            }
+            case 5 -> {
                 System.out.println("Einladungen");
                 einladungen();
-                break;
-            case 6:
+            }
+            case 6 -> {
                 System.out.println("StrassenVerteilung");
                 strassenVerteilung();
-                break;
-            case 7:
+            }
+            case 7 -> {
                 System.out.println("Kompetenz");
                 kompetenzErmittlung();
-                break;
+            }
         }
     }
 
+    /**
+     * Programm fuer die Loesung des Feuerwerk Problems.
+     */
     private static void einladungen() {
         List<EulerTourAlgorithmus.Node> graph = null;
 
         int wahl = decide();
+        EulerTourAlgorithmus.Node startNode = null;
 
         switch (wahl) {
-            case 1:
+            case 1 -> {
                 graph = createGraphEulerTour();
-                break;
-            case 2:
+                System.out.println("Geben Sie den Startknoten an: ");
+                startNode = knotenEingabeEulerTour(graph);
+                System.out.println("Start: " + startNode.getLabel());
+            }
+            case 2 -> {
                 graph = Problem5.createProblemGraph();
-                break;
+                startNode = getNodeWithLabelEulerTour("Streichholz", graph);
+                System.out.println("Start: " + startNode.getLabel());
+            }
         }
 
          EulerTour euler = new EulerTour(graph);
-        euler.run(graph.get(0));
+        assert graph != null;
+        euler.run(startNode);
         List<EulerTourAlgorithmus.Node> tour = euler.getTour();
         System.out.print("Weg");
         for (EulerTourAlgorithmus.Node entries : tour) {
@@ -99,8 +109,6 @@ public class UserEingabe {
         System.out.println();
     }
 
-
-
     /**
      * Programm fuer die Loesung des Feuerwerk Problems.
      */
@@ -108,21 +116,20 @@ public class UserEingabe {
         List<DijkstraAlgorithmus.Node> graph = null;
 
         int wahl = decide();
-        DijkstraAlgorithmus.Node startNode = null;
+        DijkstraAlgorithmus.Node startNode;
 
         switch (wahl) {
-            case 1:
+            case 1 -> {
                 graph = createGraphDijkstra();
                 System.out.println("Geben Sie den Startknoten an: ");
                 startNode = knotenEingabeDijkstra(graph);
                 System.out.println("Start: " + startNode.getLabel());
-                break;
-            case 2:
+            }
+            case 2 -> {
                 graph = Problem3.createProblemGraph();
                 startNode = getNodeWithLabelDijkstra("Streichholz", graph);
                 System.out.println("Start: " + startNode.getLabel());
-                break;
-
+            }
         }
 
         Dijkstra dijkstra = new Dijkstra(graph);
@@ -146,21 +153,20 @@ public class UserEingabe {
         Node endNode = null;
 
         switch (wahl) {
-            case 1:
+            case 1 -> {
                 graph = createGraphMaxFlow();
                 System.out.println("Geben Sie den Startknoten an: ");
                 startNode = knotenEingabeMaxFlow(graph);
                 System.out.println("Geben Sie den Endknoten an: ");
                 endNode = knotenEingabeMaxFlow(graph);
                 System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
-                break;
-
-            case 2:
+            }
+            case 2 -> {
                 graph = Problem2.createProblemGraph();
                 startNode = getNodeWithLabelMaxFlow("w", graph);
                 endNode = getNodeWithLabelMaxFlow("s", graph);
                 System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
-                break;
+            }
         }
 
 
@@ -185,12 +191,8 @@ public class UserEingabe {
         int wahl = decide();
 
         switch (wahl) {
-            case 1:
-                graph = createGraphMaxFlowMatching();
-                break;
-            case 2:
-                graph = Problem7.createProblemGraph();
-                break;
+            case 1 -> graph = createGraphMaxFlowMatching();
+            case 2 -> graph = Problem7.createProblemGraph();
         }
 
         MaxF maxF = new MaxF(graph);
@@ -214,12 +216,8 @@ public class UserEingabe {
         int wahl = decide();
 
         switch (wahl) {
-            case 1:
-                graph = createGraphMaxFlowMatching();
-                break;
-            case 2:
-                graph = Problem4.createProblemGraph();
-                break;
+            case 1 -> graph = createGraphMaxFlowMatching();
+            case 2 -> graph = Problem4.createProblemGraph();
         }
 
         MaxF maxF = new MaxF(graph);
@@ -250,19 +248,19 @@ public class UserEingabe {
         Node endNode = null;
 
         switch (wahl) {
-            case 1:
+            case 1 -> {
                 graph = createGraphMaxFlow();
                 System.out.println("Geben sie den Startknoten an: ");
                 startNode = knotenEingabeMaxFlow(graph);
                 System.out.println("Geben sie den Endknoten an: ");
                 endNode = knotenEingabeMaxFlow(graph);
                 System.out.println("Start: " + startNode.getLabel() + " Ende: " + endNode.getLabel());
-                break;
-            case 2:
+            }
+            case 2 -> {
                 graph = Problem6.createProblemGraph();
                 startNode = getNodeWithLabelMaxFlow("s", graph);
                 endNode = getNodeWithLabelMaxFlow("t", graph);
-                break;
+            }
         }
 
 
@@ -288,22 +286,18 @@ public class UserEingabe {
         int wahl = decide();
 
         switch (wahl) {
-            case 1:
-                graph = createGraphPrim();
-                break;
-            case 2:
-                graph = Problem1.createProblemGraph();
-                break;
+            case 1 -> graph = createGraphPrim();
+            case 2 -> graph = Problem1.createProblemGraph();
         }
 
         Prim prim = new Prim(graph);
         System.out.println(prim.originalGraphToString());
         System.out.println("----------------");
-        prim.run();
+        int sumWeight = prim.run();
         System.out.println();
         prim.resetPrintHistory();
         System.out.println(prim.minimumSpanningTreeToString());
-        System.out.println("Gesamtsumme: " + PrimAlgorithmus.Edge.getSumWeight());
+        System.out.println("Gesamtsumme: " + sumWeight);
     }
 
     /**
@@ -311,7 +305,7 @@ public class UserEingabe {
      *
      * @return Graphen des Prim Algo
      */
-    private static List<PrimAlgorithmus.Node> createGraphPrim() {
+    public static List<PrimAlgorithmus.Node> createGraphPrim() {
         List<PrimAlgorithmus.Node> graph = new ArrayList<>();
 
         Scanner scanner = new Scanner(System.in);
@@ -372,7 +366,7 @@ public class UserEingabe {
                 End = knotenEingabePrim(graph);
 
                 if (Start == End) {
-                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
                     System.out.println("Gewicht: ");
@@ -451,10 +445,10 @@ public class UserEingabe {
                 End = knotenEingabeMaxFlow(graph);
 
                 if (Start == End) {
-                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
-                    System.out.println("Kapazität: ");
+                    System.out.println("Kapazitaet: ");
                     cap = scanner.nextInt();
                     break;
                 }
@@ -577,10 +571,10 @@ public class UserEingabe {
                 End = knotenEingabeMaxFlow(graph);
 
                 if (Start == End) {
-                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
-                    System.out.println("Kapazität: ");
+                    System.out.println("Kapazitaet: ");
                     cap = scanner.nextInt();
                     break;
                 }
@@ -651,7 +645,7 @@ public class UserEingabe {
                 End = knotenEingabeDijkstra(graph);
 
                 if (Start == End) {
-                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
                     System.out.println("Gewicht: ");
@@ -726,7 +720,7 @@ public class UserEingabe {
                 End = knotenEingabeEulerTour(graph);
 
                 if (Start == End) {
-                    System.out.println("Sie können nicht zwei Knoten miteinander verbinden, bitte wählen Sie zwei unterschiedliche Knoten!");
+                    System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
                     label = Start.getLabel() + End.getLabel();
@@ -748,7 +742,7 @@ public class UserEingabe {
 
         int wahl = 0;
 
-        System.out.println("Möchten Sie einen eigenen Graph erstellen oder den Graphen des Problems testen?");
+        System.out.println("Moechten Sie einen eigenen Graph erstellen oder den Graphen des Problems testen?");
         System.out.println("Eigener Graph [1]");
         System.out.println("Graph des Problems [2]");
 
@@ -757,7 +751,7 @@ public class UserEingabe {
             if (scanner.hasNextInt()) {
                 wahl = scanner.nextInt();
                 if (wahl < 1 || wahl > 2) {
-                    System.out.println("Bitte wählen Sie [1] oder [2]. ");
+                    System.out.println("Bitte waehlen Sie [1] oder [2]. ");
                     continue;
                 }
             } else {
@@ -781,14 +775,9 @@ public class UserEingabe {
 
         for (Node node : graph) {
             if (node.getLabel().equals(name)) {
-                Node tmpNode = node;
-                return tmpNode;
+                return node;
             }
         }
-
-//        if (tmpNode == null) {
-//            throw new RuntimeException("Knoten " + name +" nicht im Graphen gefunden");
-//        }
         return null;
     }
 
@@ -833,8 +822,7 @@ public class UserEingabe {
 
         for (PrimAlgorithmus.Node node : graph) {
             if (node.getLabel().equals(name)) {
-                PrimAlgorithmus.Node tmpNode = node;
-                return tmpNode;
+                return node;
             }
         }
         return null;
@@ -869,6 +857,15 @@ public class UserEingabe {
         return getNodeWithLabelPrim(nodeLabel, graph);
     }
 
+    public static DijkstraAlgorithmus.Node getNodeWithLabelDijkstra(String name, List<DijkstraAlgorithmus.Node> graph) {
+        for (DijkstraAlgorithmus.Node node : graph) {
+            if (node.getLabel().equals(name)) {
+                return node;
+            }
+        }
+        return null;
+    }
+
     public static DijkstraAlgorithmus.Node knotenEingabeDijkstra(List<DijkstraAlgorithmus.Node> graph) {
         Scanner scanner = new Scanner(System.in);
 
@@ -892,11 +889,10 @@ public class UserEingabe {
         return getNodeWithLabelDijkstra(nodeLabel, graph);
     }
 
-    public static DijkstraAlgorithmus.Node getNodeWithLabelDijkstra(String name, List<DijkstraAlgorithmus.Node> graph) {
-        for (DijkstraAlgorithmus.Node node : graph) {
+    public static EulerTourAlgorithmus.Node getNodeWithLabelEulerTour(String name, List<EulerTourAlgorithmus.Node> graph) {
+        for (EulerTourAlgorithmus.Node node : graph) {
             if (node.getLabel().equals(name)) {
-                DijkstraAlgorithmus.Node tmpNode = node;
-                return tmpNode;
+                return node;
             }
         }
         return null;
@@ -923,16 +919,6 @@ public class UserEingabe {
             correctInput = false;
         }
         return getNodeWithLabelEulerTour(nodeLabel, graph);
-    }
-
-    private static EulerTourAlgorithmus.Node getNodeWithLabelEulerTour(String name, List<EulerTourAlgorithmus.Node> graph) {
-        for (EulerTourAlgorithmus.Node node : graph) {
-            if (node.getLabel().equals(name)) {
-                EulerTourAlgorithmus.Node tmpNode = node;
-                return tmpNode;
-            }
-        }
-        return null;
     }
 }
 

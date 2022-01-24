@@ -15,7 +15,10 @@ public class Prim {
     /**
      * Findet den Minimum Spanning Tree (MST) im Graphen.
      */
-    public void run() {
+    public int run() {
+
+        int sumWeight = 0;
+
         if (graph.size() > 0) {
             graph.get(0).setVisited(true);
         }
@@ -32,9 +35,11 @@ public class Prim {
                     }
                 }
             }
+            sumWeight += nextMinimum.getWeight();
             nextMinimum.setIncluded(true);
             nextNode.setVisited(true);
         }
+        return sumWeight;
     }
 
     /**

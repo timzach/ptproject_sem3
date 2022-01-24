@@ -12,11 +12,11 @@ public class PrimUnitTest {
         Prim prim = new Prim(createGraph());
         System.out.println(prim.originalGraphToString());
         System.out.println("----------------");
-        prim.run();
+        int sumWeight = prim.run();
         System.out.println();
         prim.resetPrintHistory();
         System.out.println(prim.minimumSpanningTreeToString());
-        System.out.println("Gesamtsumme: " + Edge.getSumWeight());
+        System.out.println("Gesamtsumme: " + sumWeight);
     }
 
     public static List<Node> createGraph() {
