@@ -6,7 +6,6 @@ public class Edge {
 
 
     private boolean isPrinted = false;
-    private boolean isFull = false;
     private boolean isResidual = false;
     /**
      * Wird für das Bearbeiten des Graphens beim Matching genutzt.
@@ -35,14 +34,6 @@ public class Edge {
 
     public int getCapacity() {
         return capacity;
-    }
-
-    public boolean isFull() {
-        return isFull;
-    }
-
-    public void setFull(boolean full) {
-        isFull = full;
     }
 
     public boolean isPrinted() {

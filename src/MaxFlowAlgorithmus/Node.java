@@ -4,7 +4,7 @@ import java.util.*;
 
 public class Node {
 
-    private String label = null;
+    private final String label;
     private int group = 0;
     /**
      * Hashmap "edges" speichert den Zielknoten als Key und die Kante als Value
@@ -26,24 +26,12 @@ public class Node {
         return label;
     }
 
-    public void setLabel(String label) {
-        this.label = label;
-    }
-
     public int getGroup() {
         return group;
     }
 
-    public void setGroup(int group) {
-        this.group = group;
-    }
-
     public Map<Node, Edge> getEdges() {
         return edges;
-    }
-
-    public void setEdges(Map<Node, Edge> edges) {
-        this.edges = edges;
     }
 
     /**
@@ -128,34 +116,6 @@ public class Node {
         for (Map.Entry<Node, Edge> pair : edges.entrySet()) {
             residualEdges.put(pair.getKey(), new Edge(pair.getValue()));
         }
-    }
-
-    public Optional<List<Node>> path_dfs(Node target, Set<Node> visited) {
-
-        if (edges.containsKey(target) && !edges.get(target).isFull()) {
-            List<Node> path = new ArrayList<>();
-            path.add(target);
-            path.add(this);
-
-            return Optional.of(path);
-        }
-        visited.add(this);
-        //Set<Node> nodeSet = edges.keySet();
-        //List<Node> nodeList = new LinkedList<Node>(nodeSet);
-        //Collections.shuffle(nodeList);
-        for (Node node : edges.keySet()) {
-            if (!visited.contains(node)) {
-                if (!edges.get(node).isFull()) {
-                    Optional<List<Node>> tmp = node.path_dfs(target, visited);
-
-                    if (tmp.isPresent()) {
-                        tmp.get().add(this);
-                        return tmp;
-                    }
-                }
-            }
-        }
-        return Optional.empty();
     }
 
     /**
@@ -379,11 +339,7 @@ public class Node {
      * @return true, wenn die Hashmap Inhalt hat <p>false, wenn keine Rueckflusskanten vorhanden sind</p>
      */
     public boolean checkResidualHasContent() {
-        if (this.residualEdges == null) {
-            return false;
-        } else {
-            return true;
-        }
+        return this.residualEdges != null;
     }
 
     /**

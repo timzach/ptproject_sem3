@@ -21,35 +21,28 @@ public class MaxF {
         createResidualGraph();
 
         int maxFlow = 0;
-        boolean tmpBoolean = false;
         //while Kanten nicht voll
         while (true) {
 
-
-//            System.out.println("-------------------");
             resetPrintHistory();
-            //Optional<List<Node>> tmp = source.path_dfs(target, new HashSet<>());
+
             Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
 
             if (tmp.isEmpty()) {
                 break;
             }
             List<Node> reversePath = tmp.get();
-            List<Node> path = new ArrayList<Node>(reversePath);
+            List<Node> path = new ArrayList<>(reversePath);
             Collections.reverse(path);
-//            int pathSize = path.size();
-                    //minimum Kapazität finden
+
+            //minimum Kapazität finden
             int min = Integer.MAX_VALUE;
             for (int i = 0; i < path.size()-1; i++) {
-//                System.out.print(path.get(i).getLabel());
                 int tempMin = path.get(i).getEdgeCapacity(path.get(i + 1));
                 if (tempMin < min) {
                     min = tempMin;
                 }
             }
-//            System.out.print(path.get(pathSize-1).getLabel());
-//            System.out.println("\n");
-//            System.out.println("-------------------");
 
             //neue Rückfluss-Kanten mit cap = minKap erstellen
 
@@ -62,17 +55,12 @@ public class MaxF {
                 previousNode.addResidualEdge(node, new Edge(min));
                 previousNode = node;
             }
-            //fill mit reduce capacity ersetzen
+
             for (int i = 0; i < path.size()-1; i++) {
                 path.get(i).reduceCapacity(path.get(i + 1), min);
             }
 
             maxFlow += min;
-//            resetPrintHistory();
-//            printPath(path);
-//            System.out.println("-------------------");
-//            System.out.println(graphToString());
-//            System.out.println("-------------------");
         }
         return maxFlow;
     }

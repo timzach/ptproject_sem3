@@ -9,7 +9,6 @@ public class MaxFlowMatchingUnitTest {
     @Test
     public void giveGraph(){
         List<Node> graph = createGraph();
-//        testForest(graphen,"s","t");
         MaxF maxF = new MaxF(graph);
         System.out.println(maxF.graphToString());
         System.out.println("-------------------");

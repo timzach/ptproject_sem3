@@ -2,8 +2,7 @@ package PrimAlgorithmus;
 
 public class Edge {
 
-    private int weight;
-    public static int SumWeight;
+    private final int weight;
 
     private boolean isIncluded = false;
     private boolean isPrinted = false;
@@ -14,10 +13,6 @@ public class Edge {
 
     public int getWeight() {
         return weight;
-    }
-
-    public void setWeight(int weight) {
-        this.weight = weight;
     }
 
     public boolean isIncluded() {
@@ -34,13 +29,5 @@ public class Edge {
 
     public void setPrinted(boolean printed) {
         isPrinted = printed;
-    }
-
-    public static int getSumWeight() {
-        return SumWeight;
-    }
-
-    public static void setSumWeight(int sumWeight) {
-        SumWeight = sumWeight;
     }
 }
