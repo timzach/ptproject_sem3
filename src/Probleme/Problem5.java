@@ -34,9 +34,9 @@ public class Problem5 {
         b.addEdge(c, bc);
         c.addEdge(b, bc);
 
-        Edge ad = new Edge("ad");
-        a.addEdge(d, ad);
-        d.addEdge(a, ad);
+//        Edge ad = new Edge("ad");
+//        a.addEdge(d, ad);
+//        d.addEdge(a, ad);
 
         Edge ae = new Edge("ae");
         a.addEdge(e, ae);
@@ -54,9 +54,9 @@ public class Problem5 {
         d.addEdge(f, df);
         f.addEdge(d, df);
 
-        Edge bf = new Edge("bf");
-        b.addEdge(f, bf);
-        f.addEdge(b, bf);
+//        Edge bf = new Edge("bf");
+//        b.addEdge(f, bf);
+//        f.addEdge(b, bf);
 
         Edge bj = new Edge("bj");
         b.addEdge(j, bj);
@@ -82,9 +82,9 @@ public class Problem5 {
         e.addEdge(h, eh);
         h.addEdge(e, eh);
 
-        Edge hg = new Edge("hg");
-        h.addEdge(g, hg);
-        g.addEdge(h, hg);
+//        Edge hg = new Edge("hg");
+//        h.addEdge(g, hg);
+//        g.addEdge(h, hg);
 
         Edge hi = new Edge("hi");
         h.addEdge(i, hi);
