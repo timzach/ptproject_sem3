@@ -175,11 +175,11 @@ public class UserEingabe {
         System.out.println("-------------------");
         maxF.resetPrintHistory();
         int maxFlow = maxF.run(startNode, endNode);
+        System.out.println(maxF.residualGraphToString());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
-        //maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToString());
+
     }
 
     /**
@@ -200,11 +200,10 @@ public class UserEingabe {
         System.out.println("-------------------");
         maxF.resetPrintHistory();
         int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph), getNodeWithLabelMaxFlow("t", graph));
+        System.out.println(maxF.residualGraphToStringMatchingKompetenz());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
-        maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToStringMatchingKompetenz());
     }
 
     /**
@@ -229,11 +228,10 @@ public class UserEingabe {
         System.out.println("-------------------");
         maxF.resetPrintHistory();
         int maxFlow = maxF.run(getNodeWithLabelMaxFlow("s", graph), getNodeWithLabelMaxFlow("t", graph));
+        System.out.println(maxF.residualGraphToStringMatchingPaare());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss: " + maxFlow);
         System.out.println("-------------------");
-        maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToStringMatchingPaare());
     }
 
     /**
@@ -269,11 +267,10 @@ public class UserEingabe {
         System.out.println("-------------------");
         maxF.resetPrintHistory();
         int maxFlow = maxF.run(startNode, endNode);
+        System.out.println(maxF.residualGraphToStringParking());
         System.out.println("-------------------");
         System.out.println("Maximaler Fluss in Ihrem Graphen: " + maxFlow);
         System.out.println("-------------------");
-        maxF.resetPrintHistory();
-        System.out.println(maxF.residualGraphToStringParking());
     }
 
     /**
@@ -297,7 +294,9 @@ public class UserEingabe {
         System.out.println();
         prim.resetPrintHistory();
         System.out.println(prim.minimumSpanningTreeToString());
+        System.out.println("----------------");
         System.out.println("Gesamtsumme: " + sumWeight);
+        System.out.println("----------------");
     }
 
     /**
@@ -506,7 +505,7 @@ public class UserEingabe {
 
         int anzahlNodesZweiteGruppe = 0;
 
-        System.out.println("Anzahl Nodes in der ersten Gruppe: ");
+        System.out.println("Anzahl Nodes in der zweiten Gruppe: ");
 
         boolean correctInputNodesTwo = true;
         while (correctInputNodesTwo) {
@@ -560,7 +559,7 @@ public class UserEingabe {
 
         Node Start = null;
         Node End = null;
-        int cap;
+        int cap = 1;
 
         for (int i = 0; i < anzahlEdges; i++) {
             while (true) {
@@ -574,8 +573,6 @@ public class UserEingabe {
                     System.out.println("Sie koennen nicht zwei Knoten miteinander verbinden, bitte waehlen Sie zwei unterschiedliche Knoten!");
                     continue;
                 } else {
-                    System.out.println("Kapazitaet: ");
-                    cap = scanner.nextInt();
                     break;
                 }
             }
