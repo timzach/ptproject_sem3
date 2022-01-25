@@ -35,10 +35,10 @@ public class Node {
     }
 
     /**
-     * Fuegt eine Kante hinzu, wenn bereits eine Kante mit geringer Kapazitaet existiert wird diese durch die neue Kante ersetzt.
+     * O(1) Fuegt eine Kante hinzu, wenn bereits eine Kante mit geringer Kapazitaet existiert wird diese durch die neue Kante ersetzt.
      *
      * @param node Zielknoten der Kante
-     * @param edge Die Kante zum hinzufügen
+     * @param edge Die Kante zum hinzufuegen
      */
     public void addEdge(Node node, Edge edge) {
         if (this.edges.containsKey(node)) {
@@ -51,7 +51,7 @@ public class Node {
     }
 
     /**
-     * Fuegt eine Rueckfluss-Kante hinzu oder erhoeht die Kapazität wenn diese Kante bereits existiert.
+     * O(1) Fuegt eine Rueckfluss-Kante hinzu oder erhoeht die Kapazitaet wenn diese Kante bereits existiert.
      *
      * @param node Zielknoten der Kante
      * @param edge Die Kante zum hinzufuegen
@@ -70,7 +70,7 @@ public class Node {
     }
 
     /**
-     * Wenn der Knoten die Kante besitzt gibt es die Kapazitaet zurueck
+     * O(1) Wenn der Knoten die Kante besitzt gibt es die Kapazitaet zurueck
      *
      * @param target Zielknoten der Kante
      * @return Kapazitaet als Integer
@@ -84,7 +84,7 @@ public class Node {
     }
 
     /**
-     * Wenn der Knoten die Kante hat reduziert sie dessen Kapazitaet.
+     * O(1)Wenn der Knoten die Kante hat reduziert sie dessen Kapazitaet.
      * <p>Wenn die Kapazitaet gleich O ist wird die Kante geloescht</p>
      *
      * @param target Zielknoten der Kante
@@ -103,11 +103,15 @@ public class Node {
         }
     }
 
+    /**
+     * O(1)
+     */
     public Map<Node, Edge> getResidualEdges() {
         return residualEdges;
     }
 
     /**
+     * O(e)
      * Erstellt eine Kopie der Hashmap edges in residualEdges.
      */
     public void createResidualEdges() {
@@ -119,7 +123,7 @@ public class Node {
     }
 
     /**
-     * Sucht einen Weg zu einem Knoten mit der Breitensuche
+     * O(n^2 + n) Sucht einen Weg zu einem Knoten mit der Breitensuche
      *
      * @param target  Zielknoten
      * @param visited Leeres Set um besuchte Knoten zu speichern
@@ -137,10 +141,10 @@ public class Node {
         //Source Node in Queue
         nodeQueue.add(this);
         visited.add(this);
-
-        while (!nodeQueue.isEmpty()) {
+        //O(n^2)
+        while (!nodeQueue.isEmpty()) {//O(n)
             Node currentNode = nodeQueue.poll();
-            for (Node node : currentNode.getResidualEdges().keySet()) {
+            for (Node node : currentNode.getResidualEdges().keySet()) {//O(e)
                 if (!visited.contains(node)) {
                     //if (!currentNode.getEdges().get(node).isFull()) {
                     nodeQueue.add(node);
@@ -161,7 +165,7 @@ public class Node {
             //target aus parents nehmen und den parent knoten ausfindig machen
             Node parentNode = parents.get(target);
             //schleife bis path contains source:
-            while (!path.contains(source)) {
+            while (!path.contains(source)) {//O(n)
                 //parentknoten in path schreiben
                 path.add(parentNode);
                 //parentknoten in tmp speichern
@@ -334,8 +338,8 @@ public class Node {
 
 
     /**
+     * O(1)
      * Ueberprueft den Inhalt in residualEdges
-     *
      * @return true, wenn die Hashmap Inhalt hat <p>false, wenn keine Rueckflusskanten vorhanden sind</p>
      */
     public boolean checkResidualHasContent() {
@@ -343,7 +347,7 @@ public class Node {
     }
 
     /**
-     * Checkt ob es eine Kante zurück zum Ausgangsknoten gibt, löscht die Kante zurück zum Ausgangsknoten.
+     * O(e) Checkt ob es eine Kante zurück zum Ausgangsknoten gibt, löscht die Kante zurück zum Ausgangsknoten.
      * Wenn der Knoten aus der anderen Gruppe kein Edge zurück zum Ausgangsknoten hat setzt es notNeeded auf true.
      */
     public void searchEdgeReturn() {
@@ -357,7 +361,7 @@ public class Node {
     }
 
     /**
-     * Entfernt alle Kanten die nicht gebraucht werden.
+     * O(e) Entfernt alle Kanten die nicht gebraucht werden.
      */
     public void removeNotNeeded() {
         edges.entrySet().removeIf(entry -> entry.getValue().isNotNeeded());

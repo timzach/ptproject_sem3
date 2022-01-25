@@ -11,22 +11,22 @@ public class MaxF {
     }
 
     /**
-     * Findet den MaxFlow zwischen einem Start- und Endknoten
+     * O(n^3) Findet den MaxFlow zwischen einem Start- und Endknoten
      * @param source Startknoten
      * @param target Zielknoten
      * @return MaxFlow als Integer
      */
-    public int run(Node source, Node target) {
+    public int run(Node source, Node target) {//O(n*e + e(n^3)) = O(n^3 * e)
 
-        createResidualGraph();
+        createResidualGraph();//O(n*e)
 
         int maxFlow = 0;
-        //while Kanten nicht voll
+        //while bis es keinen Weg mehr gibt O(e)
         while (true) {
-
+            //in der while Schleife: O(n^3 + n + n + n + n) = O(n^3)
             resetPrintHistory();
 
-            Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());
+            Optional<List<Node>> tmp = source.path_bfs(target, new HashSet<>());//O(n^3)
 
             if (tmp.isEmpty()) {
                 break;
@@ -37,7 +37,7 @@ public class MaxF {
 
             //minimum Kapazität finden
             int min = Integer.MAX_VALUE;
-            for (int i = 0; i < path.size()-1; i++) {
+            for (int i = 0; i < path.size()-1; i++) {//O(n)
                 int tempMin = path.get(i).getEdgeCapacity(path.get(i + 1));
                 if (tempMin < min) {
                     min = tempMin;
@@ -48,7 +48,7 @@ public class MaxF {
 
             Node previousNode = reversePath.get(0);
 
-            for (Node node : reversePath) {
+            for (Node node : reversePath) {//O(n)
                 if (node == previousNode) {
                     continue;
                 }
@@ -56,13 +56,36 @@ public class MaxF {
                 previousNode = node;
             }
 
-            for (int i = 0; i < path.size()-1; i++) {
+            for (int i = 0; i < path.size()-1; i++) {//O(n)
                 path.get(i).reduceCapacity(path.get(i + 1), min);
             }
 
             maxFlow += min;
         }
         return maxFlow;
+    }
+
+    /**
+     * O(n*e) Kopiert fuer jeden Knoten die Rueckflussedges
+     */
+    public void createResidualGraph() {
+        for (Node node : graph) {
+            node.createResidualEdges();
+        }
+    }
+
+    /**
+     * O((n*e)^2) Ueberprueft alle Knoten der Gruppe 1 ob es eine Kante hin und zurueck gibt.
+     */
+    public void checkMatching() {
+        for (Node node : graph) {
+            if (node.getGroup() == 1) {
+                node.searchEdgeReturn();
+            }
+        }
+        for (Node node : graph) {
+            node.removeNotNeeded();
+        }
     }
 
     /**
@@ -99,45 +122,6 @@ public class MaxF {
     }
 
     /**
-     * Setzt den Wert isPrinted bei jedem Knoten im Graphen zurueck.
-     */
-    public void resetPrintHistory() {
-        for (Node node : graph) {
-            for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
-                pair.getValue().setPrinted(false);
-            }
-            if (node.checkResidualHasContent()) {
-                for (Map.Entry<Node, Edge> pair : node.getResidualEdges().entrySet()) {
-                    pair.getValue().setPrinted(false);
-                }
-            }
-        }
-    }
-
-    /**
-     * Kopiert fuer jeden Knoten die Rueckflussedges
-     */
-    public void createResidualGraph() {
-        for (Node node : graph) {
-            node.createResidualEdges();
-        }
-    }
-
-    /**
-     * Ueberprueft alle Knoten der Gruppe 1 ob es eine Kante hin und zurueck gibt.
-     */
-    public void checkMatching() {
-        for (Node node : graph) {
-            if (node.getGroup() == 1) {
-                node.searchEdgeReturn();
-            }
-        }
-        for (Node node : graph) {
-            node.removeNotNeeded();
-        }
-    }
-
-    /**
      * @return String des Rueckflussgraphen ohne die Knoten s&t.
      */
     public String residualGraphToStringMatching() {
@@ -171,4 +155,20 @@ public class MaxF {
         return sb.toString();
     }
 
+
+    /**
+     * Setzt den Wert isPrinted bei jedem Knoten im Graphen zurueck.
+     */
+    public void resetPrintHistory() {
+        for (Node node : graph) {
+            for (Map.Entry<Node, Edge> pair : node.getEdges().entrySet()) {
+                pair.getValue().setPrinted(false);
+            }
+            if (node.checkResidualHasContent()) {
+                for (Map.Entry<Node, Edge> pair : node.getResidualEdges().entrySet()) {
+                    pair.getValue().setPrinted(false);
+                }
+            }
+        }
+    }
 }
