@@ -76,7 +76,7 @@ public class UserEingabe {
     }
 
     /**
-     * Programm fuer die Loesung des Feuerwerk Problems.
+     * Programm fuer die Loesung des Einladungs Problems.
      */
     private static void einladungen() {
         List<EulerTourAlgorithmus.Node> graph = null;
@@ -93,7 +93,7 @@ public class UserEingabe {
             }
             case 2 -> {
                 graph = Problem5.createProblemGraph();
-                startNode = getNodeWithLabelEulerTour("Streichholz", graph);
+                startNode = getNodeWithLabelEulerTour("A", graph);
                 System.out.println("Start: " + startNode.getLabel());
             }
         }
