@@ -15,6 +15,9 @@ public class Node {
         this.label = label;
     }
 
+    /**
+     * O(1)
+     */
     public String getLabel() {
         return label;
     }
@@ -38,20 +41,23 @@ public class Node {
         }
     }
 
+    /**
+     * O(1)
+     */
     public boolean isVisited() {
         return isVisited;
     }
 
+    /**
+     * O(1)
+     */
     public void setVisited(boolean visited) {
         isVisited = visited;
     }
 
 
-    //Note that since nextMinimum() iterates through the edges, the time complexity of this implementation is O(V2).
-    // If we store the edges in a priority queue (sorted by weight) instead, the algorithm will perform in O(E log V).
-
     /**
-     * Sucht die kuerzeste ausgehende Kante
+     *  O(e) Sucht die kuerzeste ausgehende Kante
      * @return Gibt die kuerzeste Kante sowie dessen Zielknoten zurück
      */
     public Pair<Node, Edge> nextMinimum() {

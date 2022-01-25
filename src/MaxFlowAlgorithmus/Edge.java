@@ -61,7 +61,7 @@ public class Edge {
     }
 
     /**
-     * Reduziert die Kapazitaet einer Kante.
+     * O(1) Reduziert die Kapazitaet einer Kante.
      * @param value Wie viel die Kapazitaet reduziert wird
      * @return false wenn die Kapazitaet nach der Subtraktion gleich null ist
      * <p>true wenn noch Kapazitaet verbleibt</p>
