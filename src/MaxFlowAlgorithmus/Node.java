@@ -207,17 +207,17 @@ public class Node {
     public String residualToString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Node, Edge> pair : residualEdges.entrySet()) {
-            //if (pair.getValue().isResidual()) {
+            if (pair.getValue().isResidual()) {
             if (!pair.getValue().isPrinted()) {
-                sb.append(getLabel());
+                sb.append(pair.getKey().getLabel());
                 sb.append(" --- ");
                 sb.append(pair.getValue().getCapacity());
                 sb.append(" --> ");
-                sb.append(pair.getKey().getLabel());
+                sb.append(getLabel());
                 sb.append("\n");
                 pair.getValue().setPrinted(true);
             }
-            //}
+            }
 
         }
         return sb.toString();
@@ -263,12 +263,12 @@ public class Node {
             if (pair.getValue().isResidual()) {
                 if (!pair.getValue().isPrinted()) {
                     sb.append("Auf der Straße von ");
-                    sb.append(getLabel());
-                    sb.append(" nach ");
                     sb.append(pair.getKey().getLabel());
+                    sb.append(" nach ");
+                    sb.append(getLabel());
                     sb.append(" koennen ");
                     sb.append(pair.getValue().getCapacity());
-                    sb.append(" Autos parken.");
+                    sb.append(" Autos fahren.");
 
                     sb.append("\n");
                     pair.getValue().setPrinted(true);
